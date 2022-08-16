@@ -16,6 +16,7 @@ router.get('/Contacto', (req, res) => {
     res.render('contact.html', 
         {title: 'Contacto'}
     )
+
 })
 
 
@@ -75,6 +76,8 @@ router.get('/Noticias-2', (req, res) => {
         res.render('contact.html', 
             {title: 'Contacto'}
         )
+        console.log('POST /contact')
+        console.log(req.body)
     })
 
     //Mail

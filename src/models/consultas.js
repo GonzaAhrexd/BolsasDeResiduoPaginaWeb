@@ -1,6 +1,8 @@
-const {Schema, model} = require('mongodb');
+const mongoose = require('mongoose');
 
-const ConsultasSchema = new Schema({
+//const { default: mongoose } = require('mongoose');
+
+const ConsultasSchema = new mongoose.Schema({
     nombre: {
         type:  String,
         required: true
@@ -24,4 +26,7 @@ const ConsultasSchema = new Schema({
 
 })
 
-module.exports = model('Consultas', ConsultasSchema)
+const consulta = mongoose.model('consultas', ConsultasSchema)
+
+
+module.exports = consulta;

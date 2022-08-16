@@ -105,19 +105,35 @@
 					</div>
 				 	<div id="form_status"></div>
 					<div class="contact-form">
-						<form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+						<form method="post" id="fruitkha-contact" onsubmit="ala()" action="">
 							<p>
-								<input type="text" placeholder="Nombre" name="name" id="name">
-								<input type="email" placeholder="Email" name="email" id="email">
+								<input type="text" placeholder="Nombre" name="nombre" id="nombre" required>
+								<input type="email" placeholder="Email" name="email" id="email" required>
 							</p>
 							<p>
-								<input type="tel" placeholder="Teléfono" name="phone" id="phone">
-								<input type="text" placeholder="Asunto" name="subject" id="subject">
+								<input type="tel" placeholder="Teléfono" name="telefono" id="telefono">
+								<input type="text" placeholder="Asunto" name="asunto" id="asunto" required>
 							</p>
-							<p><textarea name="message" id="message" cols="30" rows="10" placeholder="Mensaje"></textarea></p>
+							<p><textarea name="mensaje" id="message" cols="30" rows="10" placeholder="Mensaje" required></textarea></p>
 							<input type="hidden" name="token" value="FsWga4&@f6aw" />
-							<p><input type="submit" value="Enviar"></p>
+							<p><input type="submit" value="Enviar" onsubmit="ala()"></p>
+							
 						</form>
+					
+						<script type="text/javascript"> 
+						
+							function ala()
+							{ 
+							alert('Consulta enviada');
+							console.log("agregado");
+						}
+						</script>
+					
+						
+				
+			
+				
+
 					</div>
 				</div>
 				<div class="col-lg-4">

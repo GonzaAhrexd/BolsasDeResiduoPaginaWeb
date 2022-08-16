@@ -150,6 +150,13 @@ router.get('/Noticias-2', (req, res) => {
         )
     })
     
+    router.get('/admin', (req, res) => {
+        //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+        res.render('adminView.html', 
+            {title: 'Admin'}
+        )
+    })
+    
     
 
 

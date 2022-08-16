@@ -116,16 +116,27 @@
 							</p>
 							<p><textarea name="mensaje" id="message" cols="30" rows="10" placeholder="Mensaje" required></textarea></p>
 							<input type="hidden" name="token" value="FsWga4&@f6aw" />
-							<p><input type="submit" value="Enviar" onsubmit="ala()"></p>
+							<p><input type="submit" value="Enviar" ></p>
 							
 						</form>
-					
+						<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+
+
+
+						</script>
+		
 						<script type="text/javascript"> 
 						
 							function ala()
 							{ 
-							alert('Consulta enviada');
-							console.log("agregado");
+								Swal.fire({
+    								title: "Enviado",
+									text: "Se ha enviado su consulta con éxito",
+									icon: "success"
+								});
+					
+						
+						
 						}
 						</script>
 					

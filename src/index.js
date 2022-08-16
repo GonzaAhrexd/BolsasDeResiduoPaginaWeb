@@ -47,10 +47,20 @@ app.post("/Contacto", function(req,res){
   
     }); 
     nuevaConsulta.save();
-    res.redirect('/Contacto')
+    
+      res.redirect('/Contacto')
     
   })
 
+  const correos = require('./models/correos.js');
+  app.post("/", function(req,res){
+    let nuevoCorreo = new correos({
+      correo: req.body.correo,  
+    }); 
+    nuevoCorreo.save();
+    res.redirect('/')
+    
+  })
 
 
 

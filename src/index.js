@@ -52,6 +52,7 @@ app.post("/Contacto", function(req,res){
     
   })
 
+  //Correos
   const correos = require('./models/correos.js');
   app.post("/", function(req,res){
     let nuevoCorreo = new correos({
@@ -61,27 +62,3 @@ app.post("/Contacto", function(req,res){
     res.redirect('/')
     
   })
-
-
-
-// app.get('/contact', (req, res) => {
-//   //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-
-//   console.log('POST /contact')
-//   console.log(req.body)
-
-//   let consultas = new consultas()
-//   consultas.nombre = req.body.nombre
-//   consultas.telefono = req.body.telefono
-//   consultas.email = req.body.email
-//   consultas.asunto = req.body.asunto
-//   consultas.mensaje = req.body.mensaje
-
-//   consultas.save((err, consultasStored) => {
-//   if(err) res.status(500).send({message: `Error al guardar la base de datos: ${err} `})
-
-//   res.status(200).send({product: productStored})
-//   })
-  
-  
-// +})

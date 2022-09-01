@@ -220,6 +220,8 @@
 	}
 	.hero-text h1 {
 	    font-size: 28px;
+		margin-right: 0px;
+
 	}
 
 	.hero-text p.subtitle {
@@ -383,6 +385,7 @@
 
 	.hero-btns {
 	    text-align: center;
+		margin-right: 0;
 	}
 
 	.hero-btns a.bordered-btn {

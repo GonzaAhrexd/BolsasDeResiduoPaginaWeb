@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 
 const { Schema, model } = require('mongoose');
 
-
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
 console.log("todo listo")
@@ -18,9 +17,6 @@ app.set("view engine", "ejs") //Permitir el uso de ejs
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //Middlewares https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
-
-
-
 //Rutas
 
 app.use(require('./routes/'));
@@ -44,14 +40,22 @@ app.post("/Contacto", function (req, res) {
     email: req.body.email,
     asunto: req.body.asunto,
     mensaje: req.body.mensaje
-
   });
   nuevaConsulta.save();
-
   res.redirect('/Contacto')
-
 })
-
+const productos = require('./models/productos.js');
+//Productos
+app.post("/admin", function (req, res) {
+  let nuevoProducto = new productos({
+    nombre: req.body.producto,
+    img: req.body.imagen,
+    precio: req.body.precio,
+    descripcion: req.body.description,
+  });
+  nuevoProducto.save();
+  res.redirect('/admin')
+})
 //Correos
 const correos = require('./models/correos.js');
 app.post("/", function (req, res) {
@@ -60,7 +64,6 @@ app.post("/", function (req, res) {
   });
   nuevoCorreo.save();
   res.redirect('/')
-
 })
 
 //Controladores Carrito de compras

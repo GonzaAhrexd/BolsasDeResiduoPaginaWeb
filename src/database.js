@@ -5,7 +5,7 @@ const user = 'admin';
 const pass = 'simon123';
 const dbName = 'BolsasResiduo';
 
-
+//mongodb+srv://admin:simon123@cluster0.uijihcv.mongodb.net/BolsasResiduo?retryWrites=true&w=majority
 
 const uri = `mongodb+srv://${user}:${pass}@cluster0.uijihcv.mongodb.net/${dbName}?retryWrites=true&w=majority`;
  

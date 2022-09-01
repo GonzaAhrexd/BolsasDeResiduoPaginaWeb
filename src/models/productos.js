@@ -10,6 +10,10 @@ const ProductoSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    descripcion: {
+        type:  String,
+        required: true,
+    },
     img: {
         type:  String,
         required: true

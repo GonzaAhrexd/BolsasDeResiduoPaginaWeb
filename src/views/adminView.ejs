@@ -57,7 +57,7 @@
 		<!-- end header -->
 
 		<!-- breadcrumb-section -->
-	
+
 		<div class="hero-area hero-bg">
 			<div class="container">
 				<div class="row">
@@ -66,9 +66,10 @@
 							<div class="hero-text-tablecell">
 								<h1> Panel de Admin </h1>
 								<div class="hero-btns">
-									<a onClick="productos()" class="boxed-btn">Agregar productos</a>
+									<a onClick="productos()" class="boxed-btn">Productos</a>
 									<a onClick="consultas()" class="boxed-btn">Consultas</a>
 									<a onClick="correos()" class="boxed-btn">Correos</a>
+									<a onClick="noticias()" class="boxed-btn">Noticias</a>
 								</div>
 							</div>
 						</div>
@@ -76,24 +77,33 @@
 				</div>
 			</div>
 		</div>
-	
+
 		<!-- end breadcrumb section -->
 
 		<section class="productos" id="productos">
-			<div class="Cuadro">
-				<div id="form_status"></div>
-				<div class="contact-form">
-					<form method="post" id="fruitkha-contact" action="">
-						<p><input type="text" placeholder="Producto" name="producto" id="producto" required></p>
-						<p> <input type="text" placeholder="Imagen (Link)" name="imagen" id="imagen" required></p>
-						<p><input type="number" placeholder="Precio" name="precio" id="precio" required></p>
-						<p><textarea name="description" id="description" cols="15" rows="5" placeholder="Descripcion"
-								required></textarea></p>
-						<input type="hidden" name="token" value="FsWga4&@f6aw" />
-						<p><input type="submit" value="Enviar"></p>
-					</form>
+			<div class="contact-from-section mt-150 mb-150">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 mb-5 mb-lg-0">
+							<div class="Cuadro">
+								<div id="form_status"></div>
+								<div class="textoProductos">
+									<form method="post" id="fruitkha-contact" action="">
+										<h1>Agregar un nuevo producto</h1>
+										<p><input type="text" placeholder="Producto" name="producto" id="producto"  required></p>
+										<p> <input type="file" placeholder="Imagen (Link)" name="imagen" id="imagen"  required></p>
+										<p><input type="number" placeholder="Precio" name="precio" id="precio" required>
+										</p>
+										<p><textarea name="description" id="description" cols="15" rows="5"
+												placeholder="Descripcion" required></textarea></p>
+										<input type="hidden" name="token" value="FsWga4&@f6aw" />
+										<p><input type="submit" value="Enviar"></p>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
 			</div>
 		</section>
 
@@ -132,7 +142,7 @@
 								<td>
 									<form action="/consultas/eliminar/<%=consultas.id%>" method="POST">
 
-										<button type="submit" onClick="borrar()" id="<%=consultas.id %>" name="x">
+										<button type="submit" class="delete" onClick="borrar()" id="<%=consultas.id %>" name="x">
 											Eliminar </button>
 									</form>
 								</td>
@@ -146,8 +156,8 @@
 		<section class="correosDisplay" id="correosDisplay">
 			<div class="table-responsive">
 				<div class="corr">
-					<table class="table table-striped table" bgcolor="white" height="200px" width="100px"
-						align="center" border="red">
+					<table class="table table-striped table" bgcolor="white" height="200px" width="100px" align="center"
+						border="red">
 						<tr style="color:white" align="center" id="Pintar">
 							<td>Correos </td>
 							<td> Fecha añadida </td>
@@ -162,12 +172,13 @@
 								<td>
 									<%= correos.createdAt%>
 								</td>
-								<td> <form action="/correos/eliminar/<%=correos.id%>" method="POST">
+								<td>
+									<form action="/correos/eliminar/<%=correos.id%>" method="POST">
 
-									<button type="submit" onClick="borrar()" id="<%=correos.id %>" name="x">
-										Eliminar </button>
-								</form>
-							  </td>
+										<button type="submit" class="delete" onClick="borrar()" id="<%=correos.id %>" name="x">
+											Eliminar </button>
+									</form>
+								</td>
 							</tr>
 							<% })%>
 

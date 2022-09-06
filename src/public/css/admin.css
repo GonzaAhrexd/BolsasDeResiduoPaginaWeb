@@ -10,40 +10,93 @@
 .consultaBase {
     display: flex;
 }
-.Consultas{
+
+.Consultas {
     margin: 50px;
-   
+
 }
 
 .AddProducts {
     margin: 100px;
 }
 
-.consultaBase{
-    display:none;
+.consultaBase, .correosDisplay, .productos  {
+    display: none;
 }
 
-.correosDisplay{
-    display:none;
-}
-.productos{
-    display:none;
-}
-.botones{
+.botones {
     width: 200px;
     margin: 50px;
     text-align: center;
     position: absolute;
 }
 
-.corr{
+.corr, .Cuadro, .reducir {
     margin: 50px;
 }
 
-.Cuadro{
-    margin:50px;
+.delete {
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    background-color: #d31535;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+.delete:hover {
+    background-color: #051922;
+    color: #e95858;
+  }
+
+.textoProductos form p input[type=text],
+.textoProductos form p input[type=tel],
+.textoProductos form p input[type=email],
+.textoProductos form p input[type=number] {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
 }
 
-.reducir {
-    width: 50px;
-  }
+.textoProductos form p textarea {
+    border: 1px solid #ddd;
+    padding: 15px;
+    height: 200px;
+    border-radius: 3px;
+    width: 100%;
+    resize: none;
+}
+
+.textoProductos-wrap {
+    background-color: #FBFBFB;
+    padding: 45px 30px;
+    border-radius: 5px;
+}
+
+.textoProductos-box {
+    padding-left: 40px;
+    margin-bottom: 30px;
+}
+
+.textoProductos-box h4 {
+    font-size: 20px;
+    font-weight: 600;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.textoProductos-box h4 i {
+    position: absolute;
+    left: -13%;
+    color: #23ebf2;
+    top: 2px;
+}
+
+.textoProductos-box p {
+    line-height: 1.8;
+    opacity: 0.8;
+}
+
+.textoProductos-wrap .textoProductos-box:last-child {
+    margin: 0;
+}

@@ -34,7 +34,7 @@
 	<link rel="stylesheet" href="/css/main.css">
 	<!-- responsive -->
 	<link rel="stylesheet" href="/css/responsive.css">
-
+	<link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
@@ -56,58 +56,41 @@
 
 		<!-- end header -->
 
-		<style>
-			#Pintar {
-				background-color: #364B55;
-
-			}
-
-			#prueba {
-				word-wrap: break-word;
-			}
-
-			.consultaBase {
-				display: none;
-			}
-		</style>
 		<!-- breadcrumb-section -->
-		<div class="breadcrumb-section breadcrumb-bg">
+	
+		<div class="hero-area hero-bg">
 			<div class="container">
 				<div class="row">
-					<div id="Grande" class="col-lg-8 offset-lg-2 text-center">
-						<div class="breadcrumb-text">
-
-							<h1>ADMIN</h1>
+					<div class="col-lg-9 offset-lg-2 text-center">
+						<div class="hero-text">
+							<div class="hero-text-tablecell">
+								<h1> Panel de Admin </h1>
+								<div class="hero-btns">
+									<a onClick="productos()" class="boxed-btn">Agregar productos</a>
+									<a onClick="consultas()" class="boxed-btn">Consultas</a>
+									<a onClick="correos()" class="boxed-btn">Correos</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	
 		<!-- end breadcrumb section -->
-		<style>
-			.AddProducts {
-				margin: 100px;
-			}
-		</style>
-		<section class="AddProducts">
+
+		<section class="productos" id="productos">
 			<div class="Cuadro">
 				<div id="form_status"></div>
 				<div class="contact-form">
 					<form method="post" id="fruitkha-contact" action="">
-						<p>
-							<input type="text" placeholder="Producto" name="producto" id="producto" required>
-						<p> <input type="text" placeholder="Imagen (Link)" name="imagen" id="imagen" required>
-						</p>
-						</p>
-						<p>
-							<input type="number" placeholder="Precio" name="precio" id="precio" required>
-						</p>
-						<p><textarea name="description" id="description" cols="30" rows="10" placeholder="Descripcion"
-								required>
-					</textarea></p>
+						<p><input type="text" placeholder="Producto" name="producto" id="producto" required></p>
+						<p> <input type="text" placeholder="Imagen (Link)" name="imagen" id="imagen" required></p>
+						<p><input type="number" placeholder="Precio" name="precio" id="precio" required></p>
+						<p><textarea name="description" id="description" cols="15" rows="5" placeholder="Descripcion"
+								required></textarea></p>
 						<input type="hidden" name="token" value="FsWga4&@f6aw" />
 						<p><input type="submit" value="Enviar"></p>
-
 					</form>
 				</div>
 			</div>
@@ -115,43 +98,88 @@
 		</section>
 
 
-		<section class="consultaBase">
+		<section class="consultaBase" id="consultas">
 			<div class="table-responsive">
-
-
-				<table class="table table-striped table" bgcolor="white" height="200px" width="150px" align="center"
-					border="red">
-					<tr style="color:white" align="center" id="Pintar">
-						<td>Nombre </td>
-						<td>Teléfono </td>
-						<td>Email </td>
-						<td>Asunto </td>
-						<td>Texto </td>
-					</tr>
-					<%consultasList.forEach(consultas=> { %>
-
-						<tr>
-							<td width="20%">
-								<%= consultas.nombre %>
-							</td>
-							<td width=10px>
-								<%= consultas.telefono %>
-							</td>
-							<td width=24px>
-								<%= consultas.email %>
-							</td>
-							<td>
-								<%= consultas.asunto %>
-							</td>
-							<td>
-								<%= consultas.mensaje %>
-							</td>
+				<div class="Consultas">
+					<table class="table table-striped table" bgcolor="white" height="200px" width="150px" align="center"
+						border="red">
+						<tr style="color:white" align="center" id="Pintar">
+							<td>Nombre </td>
+							<td>Teléfono </td>
+							<td>Email </td>
+							<td>Asunto </td>
+							<td>Texto </td>
+							<td> </td>
 						</tr>
-						<% })%>
+						<%consultasList.forEach(consultas=> { %>
 
-				</table>
+							<tr>
+								<td width="20%">
+									<%= consultas.nombre %>
+								</td>
+								<td width=10px>
+									<%= consultas.telefono %>
+								</td>
+								<td width=24px>
+									<%= consultas.email %>
+								</td>
+								<td>
+									<%= consultas.asunto %>
+								</td>
+								<td style="overflow-wrap: anywhere;">
+									<%= consultas.mensaje %>
+								</td>
+								<td>
+									<form action="/consultas/eliminar/<%=consultas.id%>" method="POST">
+
+										<button type="submit" onClick="borrar()" id="<%=consultas.id %>" name="x">
+											Eliminar </button>
+									</form>
+								</td>
+							</tr>
+							<% })%>
+					</table>
+
+				</div>
 			</div>
 		</section>
+		<section class="correosDisplay" id="correosDisplay">
+			<div class="table-responsive">
+				<div class="corr">
+					<table class="table table-striped table" bgcolor="white" height="200px" width="100px"
+						align="center" border="red">
+						<tr style="color:white" align="center" id="Pintar">
+							<td>Correos </td>
+							<td> Fecha añadida </td>
+							<td> </td>
+						</tr>
+						<%correosList.forEach(correos=> { %>
+
+							<tr>
+								<td>
+									<%= correos.correo %>
+								</td>
+								<td>
+									<%= correos.createdAt%>
+								</td>
+								<td> <form action="/correos/eliminar/<%=correos.id%>" method="POST">
+
+									<button type="submit" onClick="borrar()" id="<%=correos.id %>" name="x">
+										Eliminar </button>
+								</form>
+							  </td>
+							</tr>
+							<% })%>
+
+
+					</table>
+
+				</div>
+			</div>
+		</section>
+
+
+
 
 		<!-- < !--footer -->
 
@@ -180,7 +208,8 @@
 			<script src="/js/sticker.js"></script>
 			<!-- main js -->
 			<script src="/js/main.js"></script>
-
+			<!-- admin js -->
+			<script src="/js/admin.js"></script>
 </body>
 
 </html>

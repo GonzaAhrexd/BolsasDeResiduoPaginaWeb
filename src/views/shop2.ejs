@@ -77,19 +77,6 @@
 		<!-- end breadcrumb section -->
 
 		<!-- products -->
-		<style>
-			.Prueba {
-				display: grid;
-				/* grid-template-columns: 50% 50% 50%; */
-				grid-template-columns: repeat(3, 1fr);
-				grid-auto-rows: minmax(100px, auto);
-				grid-gap: 0px;
-				align-content: start;
-				align-items: center;
-			}
-		</style>
-
-
 		<div class="product-section mt-150 mb-150">
 			<div class="container">
 				<div class="row product-lists">
@@ -98,7 +85,7 @@
 						<div class="col-lg-4 col-md-6 text-center strawberry">
 							<div class="single-product-item">
 								<div class="product-image">
-								<img src=<%=producto.img %>></a>
+									<img src=<%=producto.img %>></a>
 								</div>
 								<h3>
 									<%= producto.nombre %>
@@ -108,8 +95,6 @@
 								<a class="cart-btn"><i class="fas fa-shopping-cart"></i> Agregar</a>
 							</div>
 						</div>
-
-
 						<% })%>
 				</div>
 			</div>
@@ -146,14 +131,6 @@
 			<script src="/js/sticker.js"></script>
 			<!-- main js -->
 			<script src="/js/main.js"></script>
-
-			<script>
-				screamer()
-				{
-					alert("Hola")
-				}
-			</script>
-
 </body>
 
 </html>

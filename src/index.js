@@ -4,7 +4,7 @@ const express = require('express')
 const app = express()
 const path = require('path'); //Módulo de node para reconocer directorios del sistema en el que se encuentra (Windows o Linux)
 const bodyParser = require("body-parser");
-
+const methodOverride = require("method-override")
 const { Schema, model } = require('mongoose');
 
 //Configuraciones
@@ -17,6 +17,7 @@ app.set("view engine", "ejs") //Permitir el uso de ejs
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //Middlewares https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
+app.use(methodOverride('_method'));
 //Rutas
 
 app.use(require('./routes/'));
@@ -44,6 +45,15 @@ app.post("/Contacto", function (req, res) {
   nuevaConsulta.save();
   res.redirect('/Contacto')
 })
+
+
+const deleteNote = async (req, res) => {
+  await consultas.findByIdAndDelete(req.params.id);
+  res.redirect("/admin")
+};
+
+app.post('/consultas/eliminar/:id', deleteNote)
+
 const productos = require('./models/productos.js');
 //Productos
 app.post("/admin", function (req, res) {
@@ -56,6 +66,7 @@ app.post("/admin", function (req, res) {
   nuevoProducto.save();
   res.redirect('/admin')
 })
+
 //Correos
 const correos = require('./models/correos.js');
 app.post("/", function (req, res) {
@@ -65,6 +76,13 @@ app.post("/", function (req, res) {
   nuevoCorreo.save();
   res.redirect('/')
 })
+
+const deleteMail = async (req, res) => {
+  await correos.findByIdAndDelete(req.params.id);
+  res.redirect("/admin")
+};
+
+app.post('/correos/eliminar/:id', deleteMail)
 
 //Controladores Carrito de compras
 const controllers = require("./controllers")

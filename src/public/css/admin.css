@@ -1,0 +1,49 @@
+#Pintar {
+    background-color: #364B55;
+
+}
+
+#prueba {
+    word-wrap: break-word;
+}
+
+.consultaBase {
+    display: flex;
+}
+.Consultas{
+    margin: 50px;
+   
+}
+
+.AddProducts {
+    margin: 100px;
+}
+
+.consultaBase{
+    display:none;
+}
+
+.correosDisplay{
+    display:none;
+}
+.productos{
+    display:none;
+}
+.botones{
+    width: 200px;
+    margin: 50px;
+    text-align: center;
+    position: absolute;
+}
+
+.corr{
+    margin: 50px;
+}
+
+.Cuadro{
+    margin:50px;
+}
+
+.reducir {
+    width: 50px;
+  }

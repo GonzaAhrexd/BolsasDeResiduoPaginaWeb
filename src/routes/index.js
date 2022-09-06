@@ -151,21 +151,23 @@ router.get('/carro', (req, res) => {
 })
 
 const consultas = require('../models/consultas.js');
+const correos = require('../models/correos.js');
 
 router.get('/admin', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     consultas.find({}, function (err, consultas) {
-        res.render('adminView.ejs',
-            {
-                title: 'Admin',
-                consultasList: consultas
-
-            }
-        )
+        correos.find({}, function (err, correos) {
+            res.render('adminView.ejs',
+                {
+                    title: 'Admin',
+                    consultasList: consultas,
+                    correosList: correos,
+                }
+            )
+        })
     })
-
-
 })
+
 
 const productos = require('../models/productos.js');
 
@@ -182,10 +184,6 @@ router.get('/tienda', (req, res) => {
 
 
 })
-
-
-
-
 
 
 

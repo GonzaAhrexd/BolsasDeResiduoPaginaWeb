@@ -67,6 +67,13 @@ app.post("/admin", function (req, res) {
   res.redirect('/admin')
 })
 
+const deleteProductos = async (req, res) => {
+  await productos.findByIdAndDelete(req.params.id);
+  res.redirect("/admin")
+};
+
+app.post('/productos/eliminar/:id', deleteProductos)
+
 //Correos
 const correos = require('./models/correos.js');
 app.post("/", function (req, res) {
@@ -83,6 +90,20 @@ const deleteMail = async (req, res) => {
 };
 
 app.post('/correos/eliminar/:id', deleteMail)
+
+//Noticias
+const noticias = require('./models/noticias.js');
+//Productos
+app.post("/admin/noticias", function (req, res) {
+  let nuevaNoticia = new noticias({
+    titulo: req.body.titulo,
+    texto: req.body.texto,
+    img: req.body.img,
+    publicador: req.body.publicador,
+  });
+  nuevaNoticia.save();
+  res.redirect('/admin')
+})
 
 //Controladores Carrito de compras
 const controllers = require("./controllers")

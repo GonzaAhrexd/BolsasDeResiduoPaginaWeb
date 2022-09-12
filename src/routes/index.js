@@ -57,12 +57,21 @@ router.get('/index_2', (req, res) => {
 
 //Noticias
 
+const noticias = require('../models/noticias.js');
+
 router.get('/Noticias', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('news.html',
-        { title: 'Noticias' }
-    )
+    noticias.find({}, function (err, noticias) {
+        res.render('news.html',
+            {
+                title: 'Noticias',
+                noticiasList: noticias
+            }
+        )
+    })
 })
+
+
 
 router.get('/Noticias-2', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
@@ -157,13 +166,19 @@ router.get('/admin', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     consultas.find({}, function (err, consultas) {
         correos.find({}, function (err, correos) {
-            res.render('adminView.ejs',
-                {
-                    title: 'Admin',
-                    consultasList: consultas,
-                    correosList: correos,
-                }
-            )
+            productos.find({}, function (err, productos) {
+                noticias.find({}, function (err, noticias) {
+                    res.render('adminView.ejs',
+                        {
+                            title: 'Admin',
+                            consultasList: consultas,
+                            correosList: correos,
+                            productosList: productos,
+                            noticiasList: noticias,
+                        }
+                    )
+                })
+            })
         })
     })
 })

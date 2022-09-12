@@ -75,8 +75,9 @@
 			</div>
 		</div>
 		<!-- end breadcrumb section -->
-
+		
 		<!-- products -->
+	
 		<div class="product-section mt-150 mb-150">
 			<div class="container">
 				<div class="row product-lists">
@@ -87,12 +88,12 @@
 								<div class="product-image">
 									<img src=<%=producto.img %>></a>
 								</div>
-								<h3>
+								<h3 id=carroAgregar-nombre>
 									<%= producto.nombre %>
 								</h3>
 								<p class="product-price"> $<%= producto.precio %>
 								</p>
-								<a class="cart-btn"><i class="fas fa-shopping-cart"></i> Agregar</a>
+								<a class="cart-btn" onClick="agregar()"><i class="fas fa-shopping-cart" ></i> Agregar</a>
 							</div>
 						</div>
 						<% })%>

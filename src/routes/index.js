@@ -201,5 +201,17 @@ router.get('/tienda', (req, res) => {
 })
 
 
+router.get(`/noticia-detalles/`, (req, res) => {
+    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+    noticias.find({}, function (err, noticias) {
+        res.render('single-news.html',
+            {
+                title: 'Noticias',
+                noticiasList: noticias,
+            }
+        )
+    })
+})
+}
 
 module.exports = router;

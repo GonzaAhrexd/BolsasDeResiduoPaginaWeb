@@ -248,10 +248,11 @@
 												required></p>
 										<p> <input type="text" placeholder="Imagen (Link)" name="img" id="img"
 												required></p>
-										<p><input type="text" placeholder="Asunto" name="texto" id="texto" required>
-										</p>
-										<p><input type="text" placeholder="Publicante" name="publicador" id="publicador" required>
-										</p>
+												<p><input type="text" placeholder="Publicante" name="publicador" id="publicador" required>
+												</p>
+										<p><textarea name="texto" id="texto" cols="15" rows="5"
+											placeholder="Descripcion" required></textarea></p>
+									
 											<input type="hidden" name="token" value="FsWga4&@f6aw" />
 										<p><input type="submit" value="Enviar"></p>
 									</form>
@@ -273,27 +274,26 @@
 							<td> </td>
 
 						</tr>
-						<%productosList.forEach(productos=> { %>
+						<%noticiasList.forEach(noticias=> { %>
 
 							<tr>
 								<td width="20%">
-									<%= productos.nombre %>
+									<%= noticias.titulo %>
 								</td>
 								<td width=10px>
-									<img src="<%= productos.img %>" alt="">
+									<img src="<%= noticias.img %>" alt="">
 								</td>
 								<td width=24px>
-									<%= productos.precio %>
+									<%= noticias.publicador %>
 								</td>
 								<td style="overflow-wrap: anywhere;">
-									<%= productos.descripcion %>
+									<%= noticias.texto %>
 								</td>
 								<td>
-									<form action="/productos/eliminar/<%=productos.id%>" method="POST">
+									<form action="/noticias/eliminar/<%=noticias.id%>" method="POST">
 
-										<button type="submit" class="delete" onClick="borrar()" id="<%=productos.id %>"
-											name="x">
-											Eliminar </button>
+										<button type="submit" class="delete" onClick="borrar()" id="<%=noticias.id %>"
+											name="x"> Eliminar </button>
 									</form>
 								</td>
 							</tr>

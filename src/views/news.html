@@ -83,8 +83,8 @@
 					<%noticiasList.reverse().forEach(noticias=> { %>
 					<div class="col-lg-4 col-md-6">
 						<div class="single-latest-news">
-							<a href="/noticia-detalles/<%=noticias.titulo%>">
-								<div class="latest-news-bg news-bg-1"> <img src="<%=noticias.img%>" alt="">  </div>
+							<a href="/noticia-detalles/<%=noticias.titulo.replace(/ /g, "-")%>">
+								<div> <img src="<%=noticias.img%>" alt="">  </div>
 							</a>
 							<div class="news-text-box">
 								
@@ -95,7 +95,7 @@
 																			
 										</span>
 								</p>
-								<p class="excerpt"><%=noticias.texto%></p>
+								<p class="excerpt"><%=noticias.descripcion%></p>
 					
 							</div>
 						</div>

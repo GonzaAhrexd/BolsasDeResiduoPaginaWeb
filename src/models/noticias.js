@@ -10,7 +10,7 @@ const ProductoSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    texto: {
+    resumen: {
         type:  String,
         required: true,
     },
@@ -21,6 +21,10 @@ const ProductoSchema = new mongoose.Schema({
     publicador: {
         type:  String,
         required: true
+    },
+    texto: {
+        type:  String,
+        required: true,
     },
 },
 {

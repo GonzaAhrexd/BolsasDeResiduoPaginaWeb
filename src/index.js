@@ -97,9 +97,11 @@ const noticias = require('./models/noticias.js');
 app.post("/admin/noticias", function (req, res) {
   let nuevaNoticia = new noticias({
     titulo: req.body.titulo,
+    resumen: req.body.resumen,
     texto: req.body.texto,
     img: req.body.img,
     publicador: req.body.publicador,
+
   });
   nuevaNoticia.save();
   res.redirect('/admin')

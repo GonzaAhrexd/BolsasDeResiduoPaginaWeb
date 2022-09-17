@@ -201,17 +201,19 @@ router.get('/tienda', (req, res) => {
 })
 
 
-router.get(`/noticia-detalles/`, (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     noticias.find({}, function (err, noticias) {
+    noticias.forEach(noticia => {
+        router.get(`/noticia-detalles/${noticia.titulo.replace(/ /g, "")}`, (req, res) => {
+    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+    
         res.render('single-news.html',
             {
-                title: 'Noticias',
-                noticiasList: noticias,
+                title: noticia.titulo,
+                noticiasMostrar: noticia,
             }
-        )
-    })
+        ) 
+    });
 })
-}
+})
 
 module.exports = router;

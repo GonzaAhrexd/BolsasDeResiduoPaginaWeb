@@ -6,7 +6,11 @@ const path = require('path'); //Módulo de node para reconocer directorios del s
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override")
 const { Schema, model } = require('mongoose');
-
+const flash = require('connect-flash')
+const passport = require('passport')
+const morgan = require('morgan')
+const session = require('express-session')
+const cookieParser = require('cookie-parser')
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
 console.log("todo listo")
@@ -15,7 +19,15 @@ app.set('views', path.join(__dirname, 'views'))
 app.engine('html', require('ejs').renderFile)
 app.set("view engine", "ejs") //Permitir el uso de ejs
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(morgan('dev'))
+app.use(cookieParser())
+app.use(session({
+  secret: 'gonzaahre',
+  resave: false,
+  saveUninitialized: false
+}))
 
+//app.use(passport.initialize)
 //Middlewares https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
 app.use(methodOverride('_method'));
 //Rutas
@@ -106,6 +118,18 @@ app.post("/admin/noticias", function (req, res) {
   nuevaNoticia.save();
   res.redirect('/admin')
 })
+
+app.use(function(req, res, next) {
+  res.status(404).render('404.html');
+});
+
+
+const deleteNoticia = async (req, res) => {
+  await noticias.findByIdAndDelete(req.params.id);
+  res.redirect("/admin")
+};
+
+app.post('/noticias/eliminar/:id', deleteNoticia)
 
 //Controladores Carrito de compras
 const controllers = require("./controllers")

@@ -1,9 +1,10 @@
 require('dotenv').config();
 
+require("./.env")
 const mongoose = require ('mongoose')
-const user = 'admin';
-const pass = 'simon123';
-const dbName = 'BolsasResiduo';
+const user = "admin"
+const pass = "simon123"
+const dbName = "BolsasResiduo"
 
 //mongodb+srv://admin:simon123@cluster0.uijihcv.mongodb.net/BolsasResiduo?retryWrites=true&w=majority
 

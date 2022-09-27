@@ -3,13 +3,19 @@ const router = express.Router()
 
 //Index
 
+
 router.get('/', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('index.html',
         { title: 'S.O.S Empresa Simulada' }
     )
 })
-
+router.get('/login', (req, res) => {
+    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+    res.render('login.html',
+        { title: 'Login' }
+    )
+})
 //Contacto
 router.get('/Contacto', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
@@ -78,6 +84,7 @@ router.get('/Noticias-2', (req, res) => {
     res.render('single-news.html',
         { title: 'Noticias' }
     )
+    crearRutas();
 })
 
 router.get('/contact', (req, res) => {
@@ -99,49 +106,6 @@ router.get('/mail', (req, res) => {
 })
 
 //Tienda
-
-router.get('/tienda/madera', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('bolsamadera.html',
-        { title: 'Bolsa de Madera' }
-    )
-})
-router.get('/tienda/madera2', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('bolsamadera2.html',
-        { title: 'Bolsa de Madera' }
-    )
-})
-router.get('/tienda/plastico', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('bolsaplastico.html',
-        { title: 'Bolsa de Plástico' }
-    )
-})
-router.get('/tienda/plastico2', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('bolsaplastico2.html',
-        { title: 'Bolsa de Plástico' }
-    )
-})
-router.get('/tienda/mandioca', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('bolsamandioca.html',
-        { title: 'Bolsa de Mandioca' }
-    )
-})
-router.get('/tienda/algodon', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('bolsaalgodon.html',
-        { title: 'Bolsa de Algodon' }
-    )
-})
-router.get('/tienda/algodon2', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('bolsaalgodon2.html',
-        { title: 'Bolsa de Algodon' }
-    )
-})
 
 router.get('/pago', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
@@ -185,6 +149,7 @@ router.get('/admin', (req, res) => {
 
 
 const productos = require('../models/productos.js');
+const { default: mongoose } = require('mongoose')
 
 router.get('/tienda', (req, res) => {
     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
@@ -200,11 +165,58 @@ router.get('/tienda', (req, res) => {
 
 })
 
+router.get('/noticia-detalles', (req, res) => {
+    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+    res.render('shop2.ejs',
+        {
+            title: 'noticias',
+        })
+})
 
-    noticias.find({}, function (err, noticias) {
+
+router.get(`/noticia-detalles/:titulo`, (req, res) => {
+    
+    noticias.findOne({titulo: req.params.titulo.replace(/-/g, " ")}, function (err, noticia) {
+        res.render('single-news.html',
+        {
+            title: noticia.titulo,
+            noticiasMostrar: noticia,
+        }      
+    )
+  
+     
+})
+
+})
+  
+
+/** 
+ * async function crearRutas(){
+    await noticias.find({}, function (err, noticias) {
+        console.log(noticias);
+
+        noticias.forEach(noticia => {
+            router.get(`/noticia-detalles/:noticia`, (req, res) => {
+
+                res.render('single-news.html',
+
+                    {
+                        title: noticia.titulo,
+                        noticiasMostrar: noticia,
+                    }
+                )
+            });
+        })
+    })
+}
+ */
+
+
+/* 
+noticias.find({}, function (err, noticias) {
     noticias.forEach(noticia => {
         router.get(`/noticia-detalles/${noticia.titulo.replace(/ /g, "")}`, (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+ 
     
         res.render('single-news.html',
             {
@@ -214,6 +226,6 @@ router.get('/tienda', (req, res) => {
         ) 
     });
 })
-})
+})*/
 
 module.exports = router;

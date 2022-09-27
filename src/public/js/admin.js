@@ -26,7 +26,7 @@ function correos(){
     noticiasDisplay.style.display = 'none'
 }
 
-function noticias(){
+function noticias2(){
     consultasDisplay.style.display = 'none';
     productosDisplay.style.display = 'none';
     correosDisplay.style.display = 'none';

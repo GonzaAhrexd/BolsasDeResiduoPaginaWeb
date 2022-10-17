@@ -24,6 +24,7 @@ app.engine('html', require('ejs').renderFile)
 app.set("view engine", "ejs") //Permitir el uso de ejs
 
 // require('./config/passport.js')(passport)
+//Prueba
 
 //Middlewares
 app.use(methodOverride('_method'));
@@ -127,11 +128,11 @@ app.post("/admin/noticias", function (req, res) {
   res.redirect('/admin')
 })
 
-//Login
+//Login registrar 
 const usuarios = require('./models/usuarios.js')
 
-app.post("/login", function (req, res) {
-  console.log('working')
+app.post("/login/register", function (req, res) {
+  
   let nuevoUsuario = new usuarios({
     name: req.body.nameREG,
     email: req.body.emailREG,
@@ -139,7 +140,7 @@ app.post("/login", function (req, res) {
     admin: false
   });
   nuevoUsuario.save();
-  res.redirect('/')
+  res.redirect('/admin')
 })
 
 

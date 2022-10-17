@@ -37,10 +37,9 @@
   
 	<!-- Navegación fin -->
 
-  
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="#">
+            <form action="/" method="POST">
               
                 <h1 class="alt2">Crea una cuenta</h1>
                 
@@ -48,21 +47,21 @@
                    
                 </div>
                 <span>o usa tu email para registrarte</span>
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button>Sign Up</button>
+                <input type="text" placeholder="Name" name="nameREG" id="nameREG" required/>
+                <input type="email" placeholder="Email" name="emailREG" id="emailREG" required/>
+                <input type="password" placeholder="Password" name="passREG" id="passREG" required/>
+                <input type="submit" value="Registrarse"> 
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form action="/" method="post">
                 
-                <h1>Inicia sesión</h1>
+                <h1>Inicia Sesión</h1>
               
                 <input type="email" placeholder="Email" name="passLogOut" />
                 <input type="password" placeholder="Contraseña" name="passLogIn"/>
-                <a href="#">Olvidaste la contraseña?</a>
-                <button>Iniciar sesión</button>
+                <!-- <a href="#">Olvidaste la contraseña?</a> -->
+                <button>Iniciar Sesión</button>
             </form>
         </div>
         <div class="overlay-container">
@@ -70,12 +69,12 @@
                 <div class="overlay-panel overlay-left">
                     <h1>Bienvenido de vuelta</h1>
                     <p>Para seguir conectado, ingresa con tus datos personales</p>
-                    <button class="ghost" id="signIn">Sign In</button>
+                    <button class="ghost" id="signIn">Iniciar Sesión</button>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <h1>Bienvenido!</h1>
                     <p>Ingresa tus detalles personales y empieza tu viaje con nosotros.</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
+                    <button class="ghost" id="signUp">Registrarse</button>
                 </div>
             </div>
         </div>

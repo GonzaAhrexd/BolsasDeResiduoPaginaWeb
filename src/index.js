@@ -1,16 +1,20 @@
+// https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
+
 //Blockman
 require('dotenv').config();
-const express = require('express')
-const app = express()
+
+const express = require('express') //Framework JavaScript
+const app = express() 
+
 const path = require('path'); //Módulo de node para reconocer directorios del sistema en el que se encuentra (Windows o Linux)
-const bodyParser = require("body-parser");
-const methodOverride = require("method-override")
-const { Schema, model } = require('mongoose');
-const flash = require('connect-flash')
-const passport = require('passport')
-const morgan = require('morgan')
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
+const bodyParser = require("body-parser"); 
+const methodOverride = require("method-override") 
+const { Schema, model } = require('mongoose'); //Módulo para usar MongoDB
+const flash = require('connect-flash') //Módulo flash 
+const passport = require('passport') //Módulo para Autenticar
+const morgan = require('morgan') //Módulo para metodos https
+const session = require('express-session') //Módulo session
+const cookieParser = require('cookie-parser') //Módulo para administrar Cookies
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
 console.log("todo listo")
@@ -18,18 +22,22 @@ app.listen(port)
 app.set('views', path.join(__dirname, 'views'))
 app.engine('html', require('ejs').renderFile)
 app.set("view engine", "ejs") //Permitir el uso de ejs
-app.use(bodyParser.urlencoded({ extended: true }))
+
+// require('./config/passport.js')(passport)
+
+//Middlewares
+app.use(methodOverride('_method'));
 app.use(morgan('dev'))
 app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({
   secret: 'gonzaahre',
   resave: false,
   saveUninitialized: false
 }))
-
-//app.use(passport.initialize)
-//Middlewares https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
-app.use(methodOverride('_method'));
+app.use(flash());
+app.use(passport.initialize())
+app.use(passport.session())
 //Rutas
 
 app.use(require('./routes/'));
@@ -39,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Base de datos
 
-require("./database.js")
+require("./config/database.js")
 
 const consultas = require('./models/consultas.js');
 
@@ -119,9 +127,22 @@ app.post("/admin/noticias", function (req, res) {
   res.redirect('/admin')
 })
 
-app.use(function(req, res, next) {
-  res.status(404).render('404.html');
-});
+//Login
+const usuarios = require('./models/usuarios.js')
+
+app.post("/login", function (req, res) {
+  console.log('working')
+  let nuevoUsuario = new usuarios({
+    name: req.body.nameREG,
+    email: req.body.emailREG,
+    pass: req.body.passREG,
+    admin: false
+  });
+  nuevoUsuario.save();
+  res.redirect('/')
+})
+
+
 
 
 const deleteNoticia = async (req, res) => {
@@ -132,16 +153,12 @@ const deleteNoticia = async (req, res) => {
 app.post('/noticias/eliminar/:id', deleteNoticia)
 
 //Controladores Carrito de compras
-const controllers = require("./controllers")
-
-app.get("/products", controllers.getProducts);
-app.get("/products-cart", controllers.getProductsCart);
-
-// /* POST */
-app.post("/products-cart", controllers.addProductCart);
-
-// /* PUT */
- app.put("/products-cart/:productId", controllers.putProduct);
-
-// /* DELETE */
-app.delete("/products-cart/:productId", controllers.deleteProduct);
+// const controllers = require("./controllers")
+// app.get("/products", controllers.getProducts);
+// app.get("/products-cart", controllers.getProductsCart);
+// // /* POST */
+// app.post("/products-cart", controllers.addProductCart);
+// // /* PUT */
+//  app.put("/products-cart/:productId", controllers.putProduct);
+// // /* DELETE */
+// app.delete("/products-cart/:productId", controllers.deleteProduct);

@@ -1,5 +1,7 @@
+
 const express = require('express')
 const router = express.Router()
+const { authenticate } = require('passport');
 
 //Index
 
@@ -15,6 +17,9 @@ router.get('/login', (req, res) => {
     res.render('login.html',
         { title: 'Login' }
     )
+})
+router.post('/login', (req, res) => {
+    
 })
 //Contacto
 router.get('/Contacto', (req, res) => {
@@ -50,16 +55,6 @@ router.get('/index_2', (req, res) => {
         { title: 'Index2' }
     )
 })
-
-
-//Tienda
-
-// router.get('/Tienda', (req, res) => {
-//     //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-//     res.render('shop.html',
-//         { title: 'Tienda' }
-//     )
-// })
 
 //Noticias
 
@@ -127,7 +122,7 @@ const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');
 
 router.get('/admin', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+
     consultas.find({}, function (err, consultas) {
         correos.find({}, function (err, correos) {
             productos.find({}, function (err, productos) {
@@ -152,7 +147,7 @@ const productos = require('../models/productos.js');
 const { default: mongoose } = require('mongoose')
 
 router.get('/tienda', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+
     productos.find({}, function (err, productos) {
         res.render('shop2.ejs',
             {
@@ -166,7 +161,7 @@ router.get('/tienda', (req, res) => {
 })
 
 router.get('/noticia-detalles', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
+
     res.render('shop2.ejs',
         {
             title: 'noticias',
@@ -176,56 +171,14 @@ router.get('/noticia-detalles', (req, res) => {
 
 router.get(`/noticia-detalles/:titulo`, (req, res) => {
     
+ 
     noticias.findOne({titulo: req.params.titulo.replace(/-/g, " ")}, function (err, noticia) {
         res.render('single-news.html',
-        {
-            title: noticia.titulo,
-            noticiasMostrar: noticia,
-        }      
-    )
-  
-     
+        {title: noticia.titulo,
+        noticiasMostrar: noticia,}) 
 })
 
+
 })
-  
-
-/** 
- * async function crearRutas(){
-    await noticias.find({}, function (err, noticias) {
-        console.log(noticias);
-
-        noticias.forEach(noticia => {
-            router.get(`/noticia-detalles/:noticia`, (req, res) => {
-
-                res.render('single-news.html',
-
-                    {
-                        title: noticia.titulo,
-                        noticiasMostrar: noticia,
-                    }
-                )
-            });
-        })
-    })
-}
- */
-
-
-/* 
-noticias.find({}, function (err, noticias) {
-    noticias.forEach(noticia => {
-        router.get(`/noticia-detalles/${noticia.titulo.replace(/ /g, "")}`, (req, res) => {
- 
-    
-        res.render('single-news.html',
-            {
-                title: noticia.titulo,
-                noticiasMostrar: noticia,
-            }
-        ) 
-    });
-})
-})*/
 
 module.exports = router;

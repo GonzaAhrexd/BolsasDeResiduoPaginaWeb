@@ -88,7 +88,7 @@
 							</a>
 							<div class="news-text-box">
 								
-								<h3><a href="single-news.html"><%=noticias.titulo%></a></h3>
+								<h3><a href="/noticia-detalles/<%=noticias.titulo.replace(/ /g, "-")%>"> <%=noticias.titulo%></a></h3>
 								
 									<span class="author"><i class="fas fa-user"></i> <%= noticias.publicador%></span>
 									<span class="date"><i class="fas fa-calendar"></i> <%=noticias.createdAt.toDateString()%>

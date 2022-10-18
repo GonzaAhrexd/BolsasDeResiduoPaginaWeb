@@ -45,21 +45,11 @@
 			<div class="circle"></div>
 		</div>
 	</div>
-	<!--PreLoader Ends-->
-
-	<!-- header -->
-
-	<!-- logo -->
-
-	<!-- menu start -->
+	
+	<!-- menu de inicio -->
 	<%- include ('partials/navigations.html') %>
-		<!-- end header -->
-
-		<!-- search area -->
-
-		<!-- end search arewa -->
-
-		<!-- breadcrumb-section -->
+		
+		<!-- Título -->
 		<div class="breadcrumb-section breadcrumb-bg">
 			<div class="container">
 				<div class="row">
@@ -72,9 +62,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- end breadcrumb section -->
 
-		<!-- contact form -->
+
+		<!-- Formulario para consultas -->
 		<div class="contact-from-section mt-150 mb-150">
 			<div class="container">
 				<div class="row">
@@ -100,31 +90,6 @@
 								<p><input type="submit" value="Enviar"></p>
 
 							</form>
-							<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
-
-
-
-							</script>
-
-							<script type="text/javascript">
-
-								function ala() {
-									Swal.fire({
-										title: "Enviado",
-										text: "Se ha enviado su consulta con éxito",
-										icon: "success"
-									});
-
-
-
-								}
-							</script>
-
-
-
-
-
-
 						</div>
 					</div>
 					<div class="col-lg-4">
@@ -147,9 +112,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- end contact form -->
 
-		<!-- find our location -->
+		<!-- Encuentranos -->
 		<div class="find-location blue-bg">
 			<div class="container">
 				<div class="row">
@@ -159,7 +123,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- end find our location -->
 
 		<!-- google map section -->
 		<div class="embed-responsive embed-responsive-21by9">
@@ -167,18 +130,9 @@
 				src="https://maps.google.com/maps?q=Resistencia%20Chaco%20AR,%20Av.%20V%C3%A9lez%20Sarsfield%2020,%20H3500%20CPO&t=&z=15&ie=UTF8&iwloc=&output=embed"
 				width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""
 				class="embed-responsive-item"></iframe>
-
-
-
-
 		</div>
-		<!-- end google map section -->
-
-
 		<!-- footer -->
-
 		<%- include ('partials/footer.html') %>
-
 			<!-- end copyright -->
 
 			<!-- jquery -->
@@ -203,7 +157,17 @@
 			<script src="/js/form-validate.js"></script>
 			<!-- main js -->
 			<script src="/js/main.js"></script>
-
+			<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+			</script>
+			<script type="text/javascript">
+				function ala() {
+					Swal.fire({
+						title: "Enviado",
+						text: "Se ha enviado su consulta con éxito",
+						icon: "success"
+					});
+				}
+			</script>
 </body>
 
 </html>

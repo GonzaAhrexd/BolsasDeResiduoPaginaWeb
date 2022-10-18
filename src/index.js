@@ -1,20 +1,17 @@
 // https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
-
-//Blockman
 require('dotenv').config();
-
 const express = require('express') //Framework JavaScript
-const app = express() 
-
+const app = express()
 const path = require('path'); //Módulo de node para reconocer directorios del sistema en el que se encuentra (Windows o Linux)
-const bodyParser = require("body-parser"); 
-const methodOverride = require("method-override") 
+const bodyParser = require("body-parser");
+const methodOverride = require("method-override")
 const { Schema, model } = require('mongoose'); //Módulo para usar MongoDB
 const flash = require('connect-flash') //Módulo flash 
 const passport = require('passport') //Módulo para Autenticar
 const morgan = require('morgan') //Módulo para metodos https
 const session = require('express-session') //Módulo session
 const cookieParser = require('cookie-parser') //Módulo para administrar Cookies
+
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
 console.log("todo listo")
@@ -24,7 +21,6 @@ app.engine('html', require('ejs').renderFile)
 app.set("view engine", "ejs") //Permitir el uso de ejs
 
 // require('./config/passport.js')(passport)
-//Prueba
 
 //Middlewares
 app.use(methodOverride('_method'));
@@ -39,7 +35,7 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize())
 app.use(passport.session())
-//Rutas
+// Rutas
 
 app.use(require('./routes/'));
 
@@ -47,14 +43,10 @@ app.use(require('./routes/'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Base de datos
-
 require("./config/database.js")
 
+
 const consultas = require('./models/consultas.js');
-
-
-
-//Consultas
 app.post("/Contacto", function (req, res) {
   let nuevaConsulta = new consultas({
     nombre: req.body.nombre,
@@ -122,7 +114,6 @@ app.post("/admin/noticias", function (req, res) {
     texto: req.body.texto,
     img: req.body.img,
     publicador: req.body.publicador,
-
   });
   nuevaNoticia.save();
   res.redirect('/admin')
@@ -131,20 +122,28 @@ app.post("/admin/noticias", function (req, res) {
 //Login registrar 
 const usuarios = require('./models/usuarios.js')
 
-app.post("/login/register", function (req, res) {
-  
-  let nuevoUsuario = new usuarios({
-    name: req.body.nameREG,
-    email: req.body.emailREG,
-    pass: req.body.passREG,
-    admin: false
-  });
-  nuevoUsuario.save();
-  res.redirect('/admin')
+app.post("/login/register", async function (req, res) {
+
+
+    const { nameREG, emailREG, passREG } = req.body;
+    try {
+    let userExistente = await usuarios.findOne({ email: req.body.emailREG })
+    if (userExistente) {
+
+      throw new Error('Usuario ya existe')
+    }
+    else {
+      let nuevoUsuario = new usuarios({
+        name: nameREG, email: emailREG, pass: passREG, admin: false
+      });
+      nuevoUsuario.save();
+      res.redirect('/admin')
+    }
+  }
+  catch (Error) {
+    res.json({ Error: Error.message })
+  }
 })
-
-
-
 
 const deleteNoticia = async (req, res) => {
   await noticias.findByIdAndDelete(req.params.id);
@@ -152,14 +151,3 @@ const deleteNoticia = async (req, res) => {
 };
 
 app.post('/noticias/eliminar/:id', deleteNoticia)
-
-//Controladores Carrito de compras
-// const controllers = require("./controllers")
-// app.get("/products", controllers.getProducts);
-// app.get("/products-cart", controllers.getProductsCart);
-// // /* POST */
-// app.post("/products-cart", controllers.addProductCart);
-// // /* PUT */
-//  app.put("/products-cart/:productId", controllers.putProduct);
-// // /* DELETE */
-// app.delete("/products-cart/:productId", controllers.deleteProduct);

@@ -1,4 +1,3 @@
-
 const express = require('express')
 const router = express.Router()
 const { authenticate } = require('passport');
@@ -7,34 +6,32 @@ const { authenticate } = require('passport');
 
 
 router.get('/', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('index.html',
         { title: 'S.O.S Empresa Simulada' }
     )
 })
+
+//Login
 router.get('/login', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('login.html',
         { title: 'Login' }
     )
 })
+
 router.post('/login', (req, res) => {
-    
+
 })
 //Contacto
+
 router.get('/Contacto', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('contact.html',
         { title: 'Contacto' }
     )
 
 })
 
-
 //404
-
 router.get('/404', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('404.html',
         { title: 'not found' }
     )
@@ -42,26 +39,15 @@ router.get('/404', (req, res) => {
 
 //Acerca de
 router.get('/Acercade', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('about.html',
         { title: 'Acerca de' }
-    )
-})
-
-//Index 2
-router.get('/index_2', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('index_2.html',
-        { title: 'Index2' }
     )
 })
 
 //Noticias
 
 const noticias = require('../models/noticias.js');
-
 router.get('/Noticias', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     noticias.find({}, function (err, noticias) {
         res.render('news.html',
             {
@@ -73,46 +59,44 @@ router.get('/Noticias', (req, res) => {
 })
 
 
-
-router.get('/Noticias-2', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('single-news.html',
-        { title: 'Noticias' }
-    )
-    crearRutas();
+router.get(`/noticia-detalles/:titulo`, async (req, res) => {
+    try {
+        let noticiaExistente = await noticias.findOne({ titulo: req.params.titulo.replace(/-/g, " ") })
+        if (noticiaExistente) {
+            res.render('single-news.html',
+                {
+                    title: noticiaExistente.titulo,
+                    noticiasMostrar: noticiaExistente,
+                })
+        }
+        else {
+            throw new Error('Noticia no existe')
+        }
+    }
+    catch (Error) {
+        res.render('404.html',
+        {
+            title: 'La página no existe'
+        })
+    }
 })
+
 
 router.get('/contact', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('contact.html',
         { title: 'Contacto' }
-    )
-    console.log('POST /contact')
-    console.log(req.body)
-})
-
-//Mail
-
-router.get('/mail', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
-    res.render('mail.html',
-        { title: 'Mail' }
     )
 })
 
 //Tienda
-
 router.get('/pago', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('checkout.html',
         { title: 'Pago' }
     )
 })
 
 
-
 router.get('/carro', (req, res) => {
-    //res.sendFile(path.join(__dirname + "/views/index.ejs"));
     res.render('cart.html',
         { title: 'Carro' }
     )
@@ -122,7 +106,6 @@ const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');
 
 router.get('/admin', (req, res) => {
-
     consultas.find({}, function (err, consultas) {
         correos.find({}, function (err, correos) {
             productos.find({}, function (err, productos) {
@@ -147,7 +130,6 @@ const productos = require('../models/productos.js');
 const { default: mongoose } = require('mongoose')
 
 router.get('/tienda', (req, res) => {
-
     productos.find({}, function (err, productos) {
         res.render('shop2.ejs',
             {
@@ -156,29 +138,7 @@ router.get('/tienda', (req, res) => {
             }
         )
     })
-
-
 })
 
-router.get('/noticia-detalles', (req, res) => {
-
-    res.render('shop2.ejs',
-        {
-            title: 'noticias',
-        })
-})
-
-
-router.get(`/noticia-detalles/:titulo`, (req, res) => {
-    
- 
-    noticias.findOne({titulo: req.params.titulo.replace(/-/g, " ")}, function (err, noticia) {
-        res.render('single-news.html',
-        {title: noticia.titulo,
-        noticiasMostrar: noticia,}) 
-})
-
-
-})
 
 module.exports = router;

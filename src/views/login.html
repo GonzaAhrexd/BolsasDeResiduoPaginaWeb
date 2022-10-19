@@ -54,14 +54,13 @@
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="/" method="post">
+            <form action="/login/auth" method="post">
                 
                 <h1>Inicia Sesión</h1>
-              
-                <input type="email" placeholder="Email" name="passLogOut" />
-                <input type="password" placeholder="Contraseña" name="passLogIn"/>
+                <input type="email" placeholder="Email" name="emailLOG" id="emailLOG" required />
+                <input type="password" placeholder="Contraseña" name="passLOG" id="passLOG" required/>
                 <!-- <a href="#">Olvidaste la contraseña?</a> -->
-                <button>Iniciar Sesión</button>
+                <input type="submit" value="Iniciar Sesión">
             </form>
         </div>
         <div class="overlay-container">

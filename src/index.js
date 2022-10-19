@@ -106,6 +106,13 @@ app.post('/correos/eliminar/:id', deleteMail)
 
 //Noticias
 const noticias = require('./models/noticias.js');
+const deleteNoticia = async (req, res) => {
+  await noticias.findByIdAndDelete(req.params.id);
+  res.redirect("/admin")
+};
+
+app.post('/noticias/eliminar/:id', deleteNoticia)
+
 //Productos
 app.post("/admin/noticias", function (req, res) {
   let nuevaNoticia = new noticias({
@@ -119,17 +126,16 @@ app.post("/admin/noticias", function (req, res) {
   res.redirect('/admin')
 })
 
-//Login registrar 
+//Usuarios
+//Login registro
+
 const usuarios = require('./models/usuarios.js')
 
 app.post("/login/register", async function (req, res) {
-
-
-    const { nameREG, emailREG, passREG } = req.body;
-    try {
+  const { nameREG, emailREG, passREG } = req.body;
+  try {
     let userExistente = await usuarios.findOne({ email: req.body.emailREG })
     if (userExistente) {
-
       throw new Error('Usuario ya existe')
     }
     else {
@@ -137,6 +143,7 @@ app.post("/login/register", async function (req, res) {
         name: nameREG, email: emailREG, pass: passREG, admin: false
       });
       nuevoUsuario.save();
+
       res.redirect('/admin')
     }
   }
@@ -145,9 +152,24 @@ app.post("/login/register", async function (req, res) {
   }
 })
 
-const deleteNoticia = async (req, res) => {
-  await noticias.findByIdAndDelete(req.params.id);
-  res.redirect("/admin")
-};
+//Usuarios Autenticación
 
-app.post('/noticias/eliminar/:id', deleteNoticia)
+app.post("/login/auth", async function (req, res) {
+  const { emailLOG, passLOG } = req.body
+
+  try {
+    const user = await usuarios.findOne({ email: emailLOG })
+    if (!user) throw new Error('Usuario no existente')
+
+    if (!(await user.comparePass(passLOG))){
+       throw new Error('Contraseña incorrecta')
+    }
+       else{ 
+    res.redirect('/')
+  }
+  } catch (error) {
+    console.log(error)
+    res.send(error.message)
+  }
+})
+

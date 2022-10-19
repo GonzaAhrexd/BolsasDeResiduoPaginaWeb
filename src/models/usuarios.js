@@ -1,5 +1,5 @@
 // const {Schema, model} = require('mongodb');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const { serializeUser } = require('passport');
 const UsuarioSchema = new mongoose.Schema({
@@ -23,14 +23,24 @@ const UsuarioSchema = new mongoose.Schema({
         timestamps: true
 })
 
-UsuarioSchema.methods.generateHash = function(password){
-    return bcrypt.hashSync(password, bcrypt.genSalt(8), null)
+UsuarioSchema.pre('save', async function(next){
+    const user = this
+    if(!user.isModified('pass')) return next
 
-}
+    try{
+        const salt = await bcrypt.genSalt(10)
+        const hashed = await bcrypt.hash(user.pass,salt)
+        user.pass = hashed
+        next()
+    }
+    catch(error){
+        console.log(error)
+        next()
+    }
+})
 
-
-UsuarioSchema.methods.matchPassword = function(pass){
-    return bcrypt.compare(pass, this.local.pass);
+UsuarioSchema.methods.comparePass = async function(canditePass){
+    return await bcrypt.compare(canditePass, this.pass)
     
 }
 

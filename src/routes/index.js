@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { authenticate } = require('passport');
-
+const verificarSesion = require('../middlewares/verificarSesion.js');
 //Index
 
 
@@ -102,7 +102,7 @@ router.get('/carro', (req, res) => {
 const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');
 
-router.get('/admin', (req, res) => {
+router.get('/admin', verificarSesion , (req, res) => {
     consultas.find({}, function (err, consultas) {
         correos.find({}, function (err, correos) {
             productos.find({}, function (err, productos) {
@@ -124,7 +124,8 @@ router.get('/admin', (req, res) => {
 
 
 const productos = require('../models/productos.js');
-const { default: mongoose } = require('mongoose')
+const { default: mongoose } = require('mongoose');
+
 
 router.get('/tienda', (req, res) => {
     productos.find({}, function (err, productos) {

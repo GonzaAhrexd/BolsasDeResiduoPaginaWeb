@@ -36,9 +36,17 @@ app.use(
   name: 'secret-name-gonza'
 }))
 app.use(flash());  
+
 app.use(passport.initialize())
 app.use(passport.session())
 
+
+passport.serializeUser((user, done) => done(null, {id: user.id, name: user.name, email: user.email})) 
+passport.deserializeUser(async(user,done)=>{
+  const userDB = await usuarios.findById(user.id)
+  return done(null, {id: userDB.id, name: userDB.name, email: userDB.email, admin: userDB.admin})
+})
+//req.user
 // Rutas
 app.use(require('./routes/'));
 //Archivos estáticos
@@ -168,12 +176,12 @@ async function (req, res) {
         name: nameREG, email: emailREG, pass: passREG, admin: false
       });
       nuevoUsuario.save();
-
-      res.redirect('/admin')
+      res.redirect('/')
     }
   }
   catch (Error) {
-    res.json({ Error: Error.message })
+    req.flash("mensajes", [{msg: Error.message}])
+    return res.redirect('/login')
   }
 })
 
@@ -184,7 +192,8 @@ app.post("/login/auth", [
 ], async function (req, res) {
   const errors = validationResult(req)
   if(!errors.isEmpty()){
-    return res.json(errors.array())
+    req.flash("mensajes", errors.array())
+    return res.redirect('/login')
   }
 
   const { emailLOG, passLOG } = req.body
@@ -197,11 +206,17 @@ app.post("/login/auth", [
        throw new Error('Contraseña incorrecta')
     }
        else{ 
-    res.redirect('/')
+    req.login(user, function(err){
+      if(err) throw new Error('Error al crear la sesión')
+      
+      return res.redirect('/')
+    })
+  
   }
-  } catch (error) {
-    console.log(error)
-    res.send(error.message)
+  } catch (Error) {
+    req.flash("mensajes", [{msg: Error.message}])
+    return res.redirect('/login')
+    // res.json({ Error: Error.message })
   }
 })
 

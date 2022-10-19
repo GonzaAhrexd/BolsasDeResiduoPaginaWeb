@@ -11,10 +11,10 @@ const passport = require('passport') //Módulo para Autenticar
 const morgan = require('morgan') //Módulo para metodos https
 const session = require('express-session') //Módulo session
 const cookieParser = require('cookie-parser') //Módulo para administrar Cookies
-
+const {body, validationResult} = require('express-validator')
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
-console.log("todo listo")
+console.log("Servidor funcionando en puerto "+port)
 app.listen(port)
 app.set('views', path.join(__dirname, 'views'))
 app.engine('html', require('ejs').renderFile)
@@ -24,28 +24,29 @@ app.set("view engine", "ejs") //Permitir el uso de ejs
 
 //Middlewares
 app.use(methodOverride('_method'));
-app.use(morgan('dev'))
+// app.use(morgan('dev'))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(session({
+
+app.use(
+  session({
   secret: 'gonzaahre',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  name: 'secret-name-gonza'
 }))
-app.use(flash());
+app.use(flash());  
 app.use(passport.initialize())
 app.use(passport.session())
+
 // Rutas
-
 app.use(require('./routes/'));
-
 //Archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 //Base de datos
 require("./config/database.js")
-
-
 const consultas = require('./models/consultas.js');
 app.post("/Contacto", function (req, res) {
   let nuevaConsulta = new consultas({
@@ -131,7 +132,31 @@ app.post("/admin/noticias", function (req, res) {
 
 const usuarios = require('./models/usuarios.js')
 
-app.post("/login/register", async function (req, res) {
+app.post("/login/register", [
+  body("nameREG" , "Ingrese un nombre válido").trim().notEmpty().escape(),
+  body("emailREG" , "Ingrese un email válido").trim().isEmail().normalizeEmail(),
+  body("passREG",  "Contraseña no válida")
+  .trim()
+  .isLength({min: 6})
+  .escape()
+  .custom((value, {req}) =>{
+    if(value !== req.body.pass2REG)
+    {
+      throw new Error('No coincide las contraseñas')
+    }
+    else{ 
+    return value;
+  }
+  }) 
+], 
+
+async function (req, res) {
+  const errors = validationResult(req)
+  if(!errors.isEmpty()){
+    req.flash("mensajes", errors.array())
+    return res.redirect('/login')
+  }
+
   const { nameREG, emailREG, passREG } = req.body;
   try {
     let userExistente = await usuarios.findOne({ email: req.body.emailREG })
@@ -154,7 +179,14 @@ app.post("/login/register", async function (req, res) {
 
 //Usuarios Autenticación
 
-app.post("/login/auth", async function (req, res) {
+app.post("/login/auth", [
+  body("emailLOG" , "Ingrese un email válido").trim().isEmail().normalizeEmail()
+], async function (req, res) {
+  const errors = validationResult(req)
+  if(!errors.isEmpty()){
+    return res.json(errors.array())
+  }
+
   const { emailLOG, passLOG } = req.body
 
   try {

@@ -14,13 +14,10 @@ router.get('/', (req, res) => {
 //Login
 router.get('/login', (req, res) => {
     res.render('login.html',
-        { title: 'Login' }
+        { title: 'Login', mensajes: req.flash("mensajes") }
     )
 })
 
-router.post('/login', (req, res) => {
-
-})
 //Contacto
 
 router.get('/Contacto', (req, res) => {

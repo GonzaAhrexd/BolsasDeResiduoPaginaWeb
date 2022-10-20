@@ -1,14 +1,14 @@
-require('dotenv').config() //Variables de entorno
-
+ //Variables de entorno
+const path = require('path');
+require('dotenv').config({
+  path: path.resolve(__dirname, './dbconfig.env')
+})
 
 const mongoose = require ('mongoose')
 
-const user = 'admin'
-const pass = "simon123"
-const dbName = "BolsasResiduo"
-
-
-//mongodb+srv://admin:simon123@cluster0.uijihcv.mongodb.net/BolsasResiduo?retryWrites=true&w=majority
+const user = process.env.user
+const pass = process.env.pass
+const dbName = process.env.dbname
 
 const uri = `mongodb+srv://${user}:${pass}@cluster0.uijihcv.mongodb.net/${dbName}?retryWrites=true&w=majority`;
  

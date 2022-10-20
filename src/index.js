@@ -1,5 +1,5 @@
 // https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
-require('dotenv').config();
+
 const express = require('express') //Framework JavaScript
 const app = express()
 const path = require('path'); //Módulo de node para reconocer directorios del sistema en el que se encuentra (Windows o Linux)
@@ -15,6 +15,7 @@ const {body, validationResult} = require('express-validator')
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
 console.log("Servidor funcionando en puerto "+port)
+
 app.listen(port)
 app.set('views', path.join(__dirname, 'views'))
 app.engine('html', require('ejs').renderFile)
@@ -28,12 +29,16 @@ app.use(methodOverride('_method'));
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+require('dotenv').config({
+  path: path.resolve(__dirname, './sessionconfig.env')
+})
+console.log(process.env.secret)
 app.use(
   session({
-  secret: 'gonzaahre',
+  secret: process.env.secret,
   resave: false,
   saveUninitialized: false,
-  name: 'secret-name-gonza'
+  name: process.env.name
 }))
 app.use(flash());  
 

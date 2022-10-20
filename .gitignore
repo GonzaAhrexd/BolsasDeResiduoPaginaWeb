@@ -1,3 +1,4 @@
 Pendiente.txt
 node_modules
-src/config/.env
+dbconfig.env
+sessionconfig.env

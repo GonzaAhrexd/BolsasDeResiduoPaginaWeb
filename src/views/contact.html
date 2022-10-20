@@ -77,11 +77,11 @@
 						<div class="contact-form">
 							<form method="post" id="fruitkha-contact" onsubmit="ala()" action="">
 								<p>
-									<input type="text" placeholder="Nombre" name="nombre" id="nombre" required>
-									<input type="email" placeholder="Email" name="email" id="email" required>
+									<input type="text" placeholder="Nombre" name="nombre" id="nombre" value="<%= usuario.nombreCompleto  %> "required>
+									<input type="email" placeholder="Email" name="email" id="email" value="<%= usuario.email  %>" required>
 								</p>
 								<p>
-									<input type="tel" placeholder="Teléfono" name="telefono" id="telefono">
+									<input type="tel" placeholder="Teléfono" name="telefono" id="telefono" value="<%= usuario.telefono  %>">
 									<input type="text" placeholder="Asunto" name="asunto" id="asunto" required>
 								</p>
 								<p><textarea name="mensaje" id="message" cols="30" rows="10" placeholder="Mensaje"

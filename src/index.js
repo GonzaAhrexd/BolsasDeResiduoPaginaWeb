@@ -1,5 +1,4 @@
 // https://www.youtube.com/watch?v=-bI0diefasA, https://www.youtube.com/watch?v=g32awc4HrLA
-
 const express = require('express') //Framework JavaScript
 const app = express()
 const path = require('path'); //Módulo de node para reconocer directorios del sistema en el que se encuentra (Windows o Linux)
@@ -32,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 require('dotenv').config({
   path: path.resolve(__dirname, './sessionconfig.env')
 })
-console.log(process.env.secret)
+
 app.use(
   session({
   secret: process.env.secret,
@@ -56,7 +55,6 @@ passport.deserializeUser(async(user,done)=>{
 app.use(require('./routes/'));
 //Archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //Base de datos
 require("./config/database.js")
@@ -223,5 +221,28 @@ app.post("/login/auth", [
     return res.redirect('/login')
     // res.json({ Error: Error.message })
   }
+})
+
+
+//Editar perfil
+
+app.post("/perfil/edicion/:id",async function (req, res) {
+
+  try{ 
+  await usuarios.findByIdAndUpdate(req.params.id,{
+    nombreCompleto: req.body.nombreCompleto.trim(),
+    telefono: req.body.telefono.trim(),
+    direccion: req.body.direccion.trim(),
+    postal: req.body.postal.trim(),
+    provincia: req.body.provincia.trim(),
+    localidad: req.body.localidad.trim()
+  })
+  res.redirect('/perfil')
+}
+catch(error){
+
+  return res.redirect('/')
+
+}
 })
 

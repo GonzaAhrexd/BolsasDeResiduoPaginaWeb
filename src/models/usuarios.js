@@ -17,7 +17,25 @@ const UsuarioSchema = new mongoose.Schema({
           },
     admin: {
         type:  Boolean
-    }
+    },
+    nombreCompleto: {
+        type:  String,
+    },
+    telefono: {
+        type:  String,
+    },
+    direccion: {
+        type:  String,
+    },
+    provincia: {
+        type:  String,
+    },
+    localidad: {
+        type:  String,
+    },
+    postal: {
+        type:  String,
+    },
 }, 
     {
         timestamps: true

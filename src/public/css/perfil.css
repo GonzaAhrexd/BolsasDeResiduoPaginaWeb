@@ -1,0 +1,97 @@
+.Separacion{
+    margin: 50px;
+}
+
+#edicion{
+  display: none;
+}
+
+.hero-areaDos {
+    height: 50%;
+    position: relative;
+    z-index: 1;
+  }
+
+.perfilbotones{
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    background-color: #157dd3;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border-color: transparent;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    margin-right: 5px;
+  }
+
+  .adminboton{
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    background-color: #157dd3;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border-color: transparent;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+  }
+
+.perfilbotones:hover{
+      background-color: #051922;
+      color: #23ebf2;
+  }
+
+  
+.hero-areaDos:after {
+    position:absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: #000000; 
+    background-image: url("../img/invierno3.jpg");
+    background-repeat: no-repeat;
+    z-index: -1;
+    padding: 100px 0px;
+    background-position: center center;
+    background-size: cover; 
+    background-attachment: fixed;
+  }
+  
+  .hero-areaDos:after {
+    background: linear-gradient(126deg, #449dd1, #78c0e0, #0b3954, #6db5e8);
+    background-size: 800% 800%;
+    -webkit-animation: AnimationName 22s ease infinite;
+    -moz-animation: AnimationName 22s ease infinite;
+    animation: AnimationName 22s ease infinite;
+  }
+
+  .hero-areaDos div {
+    height: 100%;
+  }
+  
+  .hero-areaDos div.hero-text {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .hero-areaDos div.hero-text-tablecell {
+    height: auto;
+    vertical-align: middle;
+  }
+  
+  .hero-areaDos div.hero-text-tablecell div {
+    height: auto;
+    vertical-align: middle;
+  }
+  
+.editar{
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}

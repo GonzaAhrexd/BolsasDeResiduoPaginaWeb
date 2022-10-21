@@ -36,7 +36,7 @@ router.get('/login', (req, res) => {
 
 //Contacto
 
-router.get('/Contacto', async(req, res) => {
+router.get('/Contacto', async (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
     if (req.isAuthenticated()) {
@@ -44,10 +44,11 @@ router.get('/Contacto', async(req, res) => {
         estaLog = true
     }
     res.render('contact.html',
-        { title: 'Contacto',
-        usuario: usuarioLogeado,
-        estaLog: estaLog
-    }
+        {
+            title: 'Contacto',
+            usuario: usuarioLogeado,
+            estaLog: estaLog
+        }
     )
 
 })
@@ -61,10 +62,11 @@ router.get('/404', (req, res) => {
         estaLog = true
     }
     res.render('404.html',
-        { title: 'not found',
-        usuario: usuarioLogeado,
-        estaLog: estaLog
-    }
+        {
+            title: 'not found',
+            usuario: usuarioLogeado,
+            estaLog: estaLog
+        }
     )
 })
 
@@ -77,10 +79,11 @@ router.get('/Acercade', (req, res) => {
         estaLog = true
     }
     res.render('about.html',
-        { title: 'Acerca de',
-        usuario: usuarioLogeado,
-        estaLog: estaLog
-    }
+        {
+            title: 'Acerca de',
+            usuario: usuarioLogeado,
+            estaLog: estaLog
+        }
     )
 })
 
@@ -148,10 +151,11 @@ router.get('/contact', (req, res) => {
         estaLog = true
     }
     res.render('contact.html',
-        { title: 'Contacto',
-        usuario: usuarioLogeado,
-        estaLog: estaLog
-    }
+        {
+            title: 'Contacto',
+            usuario: usuarioLogeado,
+            estaLog: estaLog
+        }
     )
 })
 
@@ -164,10 +168,11 @@ router.get('/pago', (req, res) => {
         estaLog = true
     }
     res.render('checkout.html',
-        { title: 'Pago',
-        usuario: usuarioLogeado,
-        estaLog: estaLog
-    }
+        {
+            title: 'Pago',
+            usuario: usuarioLogeado,
+            estaLog: estaLog
+        }
     )
 })
 
@@ -180,38 +185,44 @@ router.get('/carro', (req, res) => {
         estaLog = true
     }
     res.render('cart.html',
-        { title: 'Carro',
-        usuario: usuarioLogeado,
-        estaLog: estaLog
-    }
+        {
+            title: 'Carro',
+            usuario: usuarioLogeado,
+            estaLog: estaLog
+        }
     )
 })
 
 const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');
 
-router.get('/admin', verificarAdmin, async(req, res) => {
+router.get('/admin', verificarAdmin, async (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
+
     if (req.isAuthenticated()) {
         usuarioLogeado = await usuarios.findOne({ email: req.user.email })
         estaLog = true
     }
-    consultas.find({}, function (err, consultas) {
-        correos.find({}, function (err, correos) {
-            productos.find({}, function (err, productos) {
-                noticias.find({}, function (err, noticias) {
-                    res.render('adminView.ejs',
-                        {
-                            title: 'Admin',
-                            consultasList: consultas,
-                            correosList: correos,
-                            productosList: productos,
-                            noticiasList: noticias,
-                            usuario: usuarioLogeado,
-                            estaLog: estaLog
-                        }
-                    )
+
+    usuarios.find({}, function (err, usersAdmin) {
+        consultas.find({}, function (err, consultas) {
+            correos.find({}, function (err, correos) {
+                productos.find({}, function (err, productos) {
+                    noticias.find({}, function (err, noticias) {
+                        res.render('adminView.ejs',
+                            {
+                                title: 'Admin',
+                                consultasList: consultas,
+                                correosList: correos,
+                                productosList: productos,
+                                noticiasList: noticias,
+                                usuario: usuarioLogeado,
+                                estaLog: estaLog,
+                                userAdmin: usersAdmin
+                            }
+                        )
+                    })
                 })
             })
         })
@@ -259,7 +270,7 @@ router.get('/perfil', verificarSesion, async (req, res) => {
     }
 
 
-    
+
 
 
     res.render('perfil.html',
@@ -268,7 +279,7 @@ router.get('/perfil', verificarSesion, async (req, res) => {
             usuario: usuarioLogeado,
             estaLog: estaLog
         })
-        }
-    )
+}
+)
 
 module.exports = router;

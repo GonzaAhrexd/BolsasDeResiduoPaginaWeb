@@ -138,6 +138,7 @@ app.post("/admin/noticias", function (req, res) {
   res.redirect('/admin')
 })
 
+
 //Usuarios
 //Login registro
 
@@ -244,5 +245,33 @@ catch(error){
   return res.redirect('/')
 
 }
+})
+
+app.post("/admin/agregar", async function (req,res){
+  
+  try{ 
+
+    await usuarios.findOneAndUpdate({email: req.body.correoNuevoAdmin},{
+      admin: true
+    })
+    res.redirect('/admin')
+  }
+  catch(error){
+    return res.redirect('/')
+  }
+
+})
+
+
+app.post("/admin/eliminar/:id",async function (req, res) {
+  try{ 
+    await usuarios.findByIdAndUpdate(req.params.id,{
+      admin: false
+    })
+    res.redirect('/admin')
+  }
+  catch(error){
+    return res.redirect('/')
+  }
 })
 

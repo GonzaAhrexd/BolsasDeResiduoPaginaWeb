@@ -47,6 +47,7 @@
 		</div>
 	</div>
 
+	
 
 	<!-- menu start -->
 	<%- include ('partials/navigations.html') %>
@@ -65,6 +66,12 @@
 				</div>
 			</div>
 		</div>
+
+		<span> <%mensajes.forEach(mensaje=> { %>
+			<div class="alert alert-dark" align="center">  <%= mensaje.msg %> </div>   
+	
+			 <%}) %>
+		  </span>
 
 		<div class="Separacion">
 			<div class="container">

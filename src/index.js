@@ -125,7 +125,7 @@ const deleteNoticia = async (req, res) => {
 
 app.post('/noticias/eliminar/:id', deleteNoticia)
 
-//Productos
+//Agregar
 app.post("/admin/noticias", function (req, res) {
   let nuevaNoticia = new noticias({
     titulo: req.body.titulo,
@@ -136,6 +136,25 @@ app.post("/admin/noticias", function (req, res) {
   });
   nuevaNoticia.save();
   res.redirect('/admin')
+})
+
+//Editar
+
+app.post("/noticias/editar/:id",async function (req, res) {
+  console.log(req.params.id)
+  console.log(req.body.texto)
+  try{ 
+  await noticias.findByIdAndUpdate(req.params.id,{
+    titulo: req.body.titulo.trim(),
+    resumen: req.body.resumen.trim(),
+    texto: req.body.texto.trim(),
+    publicador: req.body.publicador.trim(),
+  })
+  res.redirect('/admin')
+}
+catch(error){
+  return res.redirect('/')
+}
 })
 
 

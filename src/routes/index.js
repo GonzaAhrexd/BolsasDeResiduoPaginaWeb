@@ -280,7 +280,8 @@ router.get('/perfil', verificarSesion, async (req, res) => {
         {
             title: 'Perfil de Usuario',
             usuario: usuarioLogeado,
-            estaLog: estaLog
+            estaLog: estaLog,
+            mensajes: req.flash("mensajes")
         })
 }
 )

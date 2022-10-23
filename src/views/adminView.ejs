@@ -37,7 +37,7 @@
 	<!-- admin -->
 	<link rel="stylesheet" href="/css/admin.css">
 	<!-- estilos grid.js -->
-	
+
 </head>
 
 <body>
@@ -125,7 +125,8 @@
 								<tr>
 									<td width="18%">
 										<textarea id="editar" class="edicion" type="text" name="nombre"
-											value="<%= productos.nombre %>" cols="1" rows="1" readonly="true"> <%= productos.nombre %> </textarea>
+											value="<%= productos.nombre %>" cols="1" rows="1"
+											readonly="true"> <%= productos.nombre %> </textarea>
 									</td>
 									<td width="5%">
 										<img src="<%= productos.img %>" alt="">
@@ -136,8 +137,7 @@
 									</td>
 									<td style="overflow-wrap: anywhere;" width="64%">
 										<textarea id="editar" class="edicion" type="textarea" name="descripcion"
-											cols="30" rows="3" readonly="true"> <%= productos.descripcion %>
-								</textarea>
+											cols="30" rows="3" readonly="true"> <%= productos.descripcion %></textarea>
 									</td>
 									<td width="5%">
 
@@ -242,7 +242,7 @@
 
 										<button type="submit" class="delete2" onClick="borrar()" id="<%=correos.id %>"
 											name="x">
-											Eliminar </button>
+											❌ </button>
 									</form>
 								</td>
 							</tr>
@@ -277,7 +277,7 @@
 												required></textarea></p>
 
 										<input type="hidden" name="token" value="FsWga4&@f6aw" />
-										<p><input type="submit" value="Enviar"></p>
+										<p><input type="submit" value="Agregar"></p>
 									</form>
 								</div>
 							</div>
@@ -295,38 +295,65 @@
 						<tr style="color:white" align="center" id="Pintar">
 							<td>Nombre </td>
 							<td>Imagen </td>
-							<td>Precio </td>
+							<td>Autor </td>
 							<td>Descripcion </td>
+							<td>Texto </td>
 							<td> </td>
 
 						</tr>
 						<%noticiasList.forEach(noticias=> { %>
+							<form action="/noticias/editar/<%= noticias.id %>" method="post">
+								<tr>
+									<td width="10%">
+										<textarea id="editar" class="edicion" type="text" name="titulo"
+											value="<%= noticias.titulo %>" cols="1" rows="1"
+											readonly="true"> <%= noticias.titulo %></textarea>
+									</td>
+									<td width="5%">
+										<img src="<%= noticias.img %>" alt="">
+									</td>
+									<td width="5%"">
+									<textarea id="editar" class="edicion" type="text" name="publicador" value="<%= noticias.publicador %>"
+										cols="1" rows="1" readonly="true">
+										<%= noticias.publicador %> </textarea>
+									</td>
+									<td style="overflow-wrap: anywhere;" width="20%">
+										<textarea id="editar" class="edicion" type="text" name="resumen"
+											value="<%= noticias.resumen %>" cols="3" rows="5"
+											readonly="true"> <%= noticias.resumen %></textarea>
 
-							<tr>
-								<td width="20%">
-									<%= noticias.titulo %>
-								</td>
-								<td width=10px>
-									<img src="<%= noticias.img %>" alt="">
-								</td>
-								<td width=24px>
-									<%= noticias.publicador %>
-								</td>
-								<td style="overflow-wrap: anywhere;">
-									<%= noticias.texto %>
-								</td>
-								<td>
-									<form action="/noticias/eliminar/<%=noticias.id%>" method="POST">
+									</td>
+									<td style="overflow-wrap: anywhere;" width="20%">
+										<textarea id="editar" class="edicion" type="text" name="texto"
+											value="<%= noticias.texto %>" cols="3" rows="5"
+											readonly="true"> <%= noticias.texto %></textarea>
+									</td>
+									<td width="5%">
+										<div style="display: flex; flex-direction:row;">
+											<button type="submit" class="save" id="<%=noticias.id %>" name="x">
+												💾 </button>
+										
 
-										<button type="submit" class="delete2" onClick="borrar()" id="<%=noticias.id %>"
-											name="x"> Eliminar </button>
-									</form>
-								</td>
-							</tr>
-							<% })%>
-					</table>
+							</form>
+							<form action="/noticias/eliminar/<%=noticias.id%>" method="POST">
+
+								<button type="submit" class="delete" onClick="borrar()" id="<%=noticias.id %>" name="x">
+									❌ </button>
+							</form>
+
+							<button class="edit" id="edit" name="x">
+								✏️ </button>
+								<button class="edit" id="cancelEdit" name="x" style="display:none;">
+									⬅️ </button>
+							
 
 				</div>
+				</td>
+				</tr>
+				<% })%>
+					</table>
+
+			</div>
 			</div>
 		</section>
 
@@ -374,7 +401,7 @@
 									<td width="5%">
 										<form action="/admin/eliminar/<%=user.id%>" method="POST">
 											<button type="submit" class="delete2" onClick="borrar()" id="<%=user.id %>"
-												name="x"> Eliminar </button>
+												name="x"> ❌</button>
 										</form>
 									</td>
 								</tr>
@@ -410,7 +437,7 @@
 			<script src="/js/main.js"></script>
 			<!-- admin js -->
 			<script src="/js/admin.js"></script>
-		
+
 </body>
 
 </html>

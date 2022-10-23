@@ -123,18 +123,18 @@
 						<%productosList.forEach(productos=> { %>
 							<form action="/productos/editar/<%= productos.id %>" method="post">
 								<tr>
-									<td width="15%">
-										<input id="editar" class="edicion" type="text" name="nombre"
-											value="<%= productos.nombre %>" readonly="true">
+									<td width="18%">
+										<textarea id="editar" class="edicion" type="text" name="nombre"
+											value="<%= productos.nombre %>" cols="1" rows="1" readonly="true"> <%= productos.nombre %> </textarea>
 									</td>
 									<td width="5%">
 										<img src="<%= productos.img %>" alt="">
 									</td>
-									<td width="5%">
-										<input id="editar" class="edicion" type="text" name="precio"
+									<td width="3%">
+										<input id="editar" class="edicionNum" type="number" name="precio"
 											value="<%= productos.precio %>" readonly="true">
 									</td>
-									<td style="overflow-wrap: anywhere;" width="65%">
+									<td style="overflow-wrap: anywhere;" width="64%">
 										<textarea id="editar" class="edicion" type="textarea" name="descripcion"
 											cols="30" rows="3" readonly="true"> <%= productos.descripcion %>
 								</textarea>

@@ -24,7 +24,7 @@ function consultas() {
     administradorDisplay.style.display = 'none'
     document.documentElement.scrollTop = 855
 }
-function correos(){
+function correos() {
     consultasDisplay.style.display = 'none';
     productosDisplay.style.display = 'none';
     correosDisplay.style.display = 'block';
@@ -33,7 +33,7 @@ function correos(){
     document.documentElement.scrollTop = 855
 }
 
-function noticias2(){
+function noticias2() {
     consultasDisplay.style.display = 'none';
     productosDisplay.style.display = 'none';
     correosDisplay.style.display = 'none';
@@ -42,11 +42,62 @@ function noticias2(){
     document.documentElement.scrollTop = 855
 }
 
-function admin(){
+function admin() {
     consultasDisplay.style.display = 'none';
     productosDisplay.style.display = 'none';
     correosDisplay.style.display = 'none';
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'block'
     document.documentElement.scrollTop = 855
+}
+
+const editarBoton = document.querySelectorAll('#edit')
+const editarCosa = document.querySelectorAll('#editar')
+const editarCancelar = document.querySelectorAll('#cancelEdit')
+const editarGuardar = document.querySelectorAll('.save')
+const editarEliminar = document.querySelectorAll('.delete')
+
+editarCancelar.forEach(edicionCancel => {
+    edicionCancel.addEventListener('click', cancelar)
+})
+
+editarBoton.forEach(edicion => {
+    edicion.addEventListener('click', editar)
+})
+function editar() {
+    editarBoton.forEach(edicion => {
+        edicion.style.display = "none"
+    })
+    editarCancelar.forEach(cancelar => {
+        cancelar.style.display = "block"
+    })
+    editarCosa.forEach(editarr => {
+        editarr.style.borderColor = 'black'
+        editarr.readOnly = false
+    })
+    editarGuardar.forEach(editarS => {
+        editarS.style.display = 'block'
+    })
+    editarEliminar.forEach(editarS => {
+        editarS.style.display = 'block'
+    })
+}
+
+function cancelar() {
+    editarBoton.forEach(edicion => {
+        edicion.style.display = "block"
+    })
+    editarCancelar.forEach(cancelar => {
+        cancelar.style.display = "none"
+    })
+    editarCosa.forEach(editarr => {
+        editarr.style.borderColor = 'transparent'
+        editarr.readOnly = true
+    })
+    editarGuardar.forEach(editarS => {
+        editarS.style.display = 'none'
+    })
+    editarEliminar.forEach(editarS => {
+        editarS.style.display = 'none'
+    })
 }

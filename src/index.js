@@ -247,10 +247,25 @@ catch(error){
 }
 })
 
+
+app.post("/productos/editar/:id",async function (req, res) {
+
+  try{ 
+  await productos.findByIdAndUpdate(req.params.id,{
+    nombre: req.body.nombre.trim(),
+    precio: req.body.precio.trim(),
+    descripcion: req.body.descripcion.trim(),
+  })
+  res.redirect('/admin')
+}
+catch(error){
+  return res.redirect('/')
+}
+})
+
 app.post("/admin/agregar", async function (req,res){
   
   try{ 
-
     await usuarios.findOneAndUpdate({email: req.body.correoNuevoAdmin},{
       admin: true
     })

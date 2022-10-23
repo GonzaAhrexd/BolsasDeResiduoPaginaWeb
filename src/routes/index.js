@@ -205,6 +205,9 @@ router.get('/admin', verificarAdmin, async (req, res) => {
         estaLog = true
     }
 
+
+
+
     usuarios.find({}, function (err, usersAdmin) {
         consultas.find({}, function (err, consultas) {
             correos.find({}, function (err, correos) {
@@ -219,7 +222,7 @@ router.get('/admin', verificarAdmin, async (req, res) => {
                                 noticiasList: noticias,
                                 usuario: usuarioLogeado,
                                 estaLog: estaLog,
-                                userAdmin: usersAdmin
+                                userAdmin: usersAdmin,
                             }
                         )
                     })

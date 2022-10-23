@@ -6,7 +6,7 @@ module.exports = async (req,res,next) => {
         
         if(req.user.admin)
         return next()
-    }
+}
     res.redirect('/login')
-
+    req.flash("mensajes", [{msg: Error.message}])
 }

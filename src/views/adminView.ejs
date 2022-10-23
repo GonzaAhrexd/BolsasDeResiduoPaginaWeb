@@ -37,7 +37,7 @@
 	<!-- admin -->
 	<link rel="stylesheet" href="/css/admin.css">
 	<!-- estilos grid.js -->
-	<link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+	
 </head>
 
 <body>
@@ -110,7 +110,7 @@
 			<!-- Lista de Productos y eliminar -->
 			<div class="table-responsive">
 				<div class="Consultas">
-					<table class="table table-striped table" bgcolor="white" height="200px" width="150px" align="center"
+					<table class="table table-striped table" bgcolor="white" height="150px" width="150px" align="center"
 						border="red">
 						<tr style="color:white" align="center" id="Pintar">
 							<td>Nombre </td>
@@ -121,33 +121,49 @@
 
 						</tr>
 						<%productosList.forEach(productos=> { %>
+							<form action="/productos/editar/<%= productos.id %>" method="post">
+								<tr>
+									<td width="15%">
+										<input id="editar" class="edicion" type="text" name="nombre"
+											value="<%= productos.nombre %>" readonly="true">
+									</td>
+									<td width="5%">
+										<img src="<%= productos.img %>" alt="">
+									</td>
+									<td width="5%">
+										<input id="editar" class="edicion" type="text" name="precio"
+											value="<%= productos.precio %>" readonly="true">
+									</td>
+									<td style="overflow-wrap: anywhere;" width="65%">
+										<textarea id="editar" class="edicion" type="textarea" name="descripcion"
+											cols="30" rows="3" readonly="true"> <%= productos.descripcion %>
+								</textarea>
+									</td>
+									<td width="5%">
 
-							<tr>
-								<td width="20%">
-									<%= productos.nombre %>
-								</td>
-								<td width=10px>
-									<img src="<%= productos.img %>" alt="">
-								</td>
-								<td width=24px>
-									<%= productos.precio %>
-								</td>
-								<td style="overflow-wrap: anywhere;">
-									<%= productos.descripcion %>
-								</td>
-								<td>
-									<form action="/productos/eliminar/<%=productos.id%>" method="POST">
+										<div style="display: flex; flex-direction:row;">
+											<button type="submit" class="save" id="<%=productos.id %>" name="x">
+												💾 </button>
+							</form>
+							<form action="/productos/eliminar/<%=productos.id%>" method="POST">
+								<button type="submit" class="delete" onClick="borrar()" id="<%=productos.id %>"
+									name="x">
+									❌ </button>
+							</form>
 
-										<button type="submit" class="delete" onClick="borrar()" id="<%=productos.id %>"
-											name="x">
-											Eliminar </button>
-									</form>
-								</td>
-							</tr>
-							<% })%>
-					</table>
+							<button class="edit" id="edit" name="x">
+								✏️ </button>
+
+							<button class="edit" id="cancelEdit" name="x" style="display:none;">
+								⬅️ </button>
 
 				</div>
+				</td>
+				</tr>
+				<% })%>
+					</table>
+
+			</div>
 			</div>
 
 		</section>
@@ -168,10 +184,11 @@
 							<td> </td>
 						</tr>
 						<%consultasList.forEach(consultas=> { %>
-
 							<tr>
-								<td width="20%">
-									<%= consultas.nombre %>
+								<td width="10%">
+									<input id="editar" class="edicion" type="text" name="nombre"
+										value="<%= consultas.nombre %>" readonly="true">
+
 								</td>
 								<td width=10px>
 									<%= consultas.telefono %>
@@ -185,12 +202,12 @@
 								<td style="overflow-wrap: anywhere;">
 									<%= consultas.mensaje %>
 								</td>
-								<td>
+								<td width="10%">
 									<form action="/consultas/eliminar/<%=consultas.id%>" method="POST">
 
-										<button type="submit" class="delete" onClick="borrar()" id="<%=consultas.id %>"
+										<button type="submit" class="delete2" onClick="borrar()" id="<%=consultas.id %>"
 											name="x">
-											Eliminar </button>
+											❌ </button>
 									</form>
 								</td>
 							</tr>
@@ -223,7 +240,7 @@
 								<td>
 									<form action="/correos/eliminar/<%=correos.id%>" method="POST">
 
-										<button type="submit" class="delete" onClick="borrar()" id="<%=correos.id %>"
+										<button type="submit" class="delete2" onClick="borrar()" id="<%=correos.id %>"
 											name="x">
 											Eliminar </button>
 									</form>
@@ -250,8 +267,8 @@
 										</p>
 										<p> <input type="text" placeholder="Imagen (Link)" name="img" id="img" required>
 										</p>
-										<p><input type="text" placeholder="Autor" name="publicador" id="publicador" value="<%= usuario.nombreCompleto %>"
-												required>
+										<p><input type="text" placeholder="Autor" name="publicador" id="publicador"
+												value="<%= usuario.nombreCompleto %>" required>
 										</p>
 										<p><input type="text" placeholder="Resumen" name="resumen" id="resumen"
 												required>
@@ -270,9 +287,9 @@
 			</div>
 
 
-		<!-- Lista de noticias -->
+			<!-- Lista de noticias -->
 			<div class="table-responsive">
-				<div class="Consultas">
+				<div class="Consultas" id="consultas">
 					<table class="table table-striped table" bgcolor="white" height="200px" width="150px" align="center"
 						border="red">
 						<tr style="color:white" align="center" id="Pintar">
@@ -301,7 +318,7 @@
 								<td>
 									<form action="/noticias/eliminar/<%=noticias.id%>" method="POST">
 
-										<button type="submit" class="delete" onClick="borrar()" id="<%=noticias.id %>"
+										<button type="submit" class="delete2" onClick="borrar()" id="<%=noticias.id %>"
 											name="x"> Eliminar </button>
 									</form>
 								</td>
@@ -324,7 +341,8 @@
 									<form action="/admin/agregar" method="POST">
 										<h1>Otorgar permisos de adminstrador</h1>
 										<h4>Solo entrega este permiso a gente de confianza</h4>
-										<p><input type="text" placeholder="Correo de la cuenta" name="correoNuevoAdmin" id="correoNuevoAdmin" required>
+										<p><input type="text" placeholder="Correo de la cuenta" name="correoNuevoAdmin"
+												id="correoNuevoAdmin" required>
 										</p>
 										<input type="hidden" name="token" value="FsWga4&@f6aw" />
 										<p><input type="submit" value="Agregar"></p>
@@ -335,9 +353,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="table-responsive">
-				<div class="Consultas">
-					<table class="table table-striped table" bgcolor="white" height="50%" width="100%" align="center"
+			<div class="table-responsive" id="tablaAdmin" align="center">
+				<div class="Admin">
+					<table class="table table-striped table" bgcolor="white" height="50%" width="20%" align="center"
 						border="red">
 						<tr style="color:white" align="center" id="Pintar">
 							<td>Nombre de usuario</td>
@@ -346,22 +364,22 @@
 						</tr>
 						<%userAdmin.forEach(user=> { %>
 							<%if(user.admin){ %>
-							<tr>
-								<td width="20%">
-									<%= user.name %>
-								</td>
-								<td width="70%">
-									<%= user.email %>
-								</td>
-								<td>
-									<form action="/admin/eliminar/<%=user.id%>" method="POST">
-										<button type="submit" class="delete" onClick="borrar()" id="<%=user.id %>"
-											name="x"> Eliminar Permisos </button>
-									</form>
-								</td>
-							</tr>
-							<% }%>
-							<% })%>
+								<tr>
+									<td width="10%" align="center">
+										<%= user.name %>
+									</td>
+									<td width="60%" align="center">
+										<%= user.email %>
+									</td>
+									<td width="5%">
+										<form action="/admin/eliminar/<%=user.id%>" method="POST">
+											<button type="submit" class="delete2" onClick="borrar()" id="<%=user.id %>"
+												name="x"> Eliminar </button>
+										</form>
+									</td>
+								</tr>
+								<% }%>
+									<% })%>
 					</table>
 
 				</div>
@@ -392,8 +410,7 @@
 			<script src="/js/main.js"></script>
 			<!-- admin js -->
 			<script src="/js/admin.js"></script>
-			<!-- grid.js -->
-			<script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+		
 </body>
 
 </html>

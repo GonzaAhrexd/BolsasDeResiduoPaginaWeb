@@ -47,7 +47,7 @@
 		</div>
 	</div>
 
-	
+
 
 	<!-- menu start -->
 	<%- include ('partials/navigations.html') %>
@@ -67,11 +67,14 @@
 			</div>
 		</div>
 
-		<span> <%mensajes.forEach(mensaje=> { %>
-			<div class="alert alert-dark" align="center">  <%= mensaje.msg %> </div>   
-	
-			 <%}) %>
-		  </span>
+		<span>
+			<%mensajes.forEach(mensaje=> { %>
+				<div class="alert alert-dark" align="center">
+					<%= mensaje.msg %>
+				</div>
+
+				<%}) %>
+		</span>
 
 		<div class="Separacion">
 			<div class="container">
@@ -88,8 +91,9 @@
 													<%= usuario.name %>
 												</h4>
 												<p class="text-muted font-size-sm">
-													<%= usuario.provincia %>  <%= usuario.localidad %>  <%=
-																usuario.direccion %>
+													<%= usuario.provincia %>
+														<%= usuario.localidad %>
+															<%= usuario.direccion %>
 
 																<% if(usuario.admin){ %>
 																	<div>

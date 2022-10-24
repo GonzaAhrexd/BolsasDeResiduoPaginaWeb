@@ -2453,8 +2453,19 @@ ul.social-link-team li a {
 }
 
 .product-image {
-  padding: 30px;
+  padding: 50px;
   padding-bottom: 0;
+}
+figure{
+  position: relative;
+  height: 19.75rem;
+  width: 18.75rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+figure img{
+  transition: all 500ms ease-out;
 }
 
 .product-image img {

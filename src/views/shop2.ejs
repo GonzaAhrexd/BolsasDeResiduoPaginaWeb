@@ -84,12 +84,12 @@
 					<%productosList.forEach(producto=> { %>
 						<div class="col-lg-4 col-md-6 text-center strawberry">
 							<div class="single-product-item">
-								<div class="product-image">
-									<img src="/img/productos/<%=producto.img %>"> </img>
+								<div class="product-image"> 
+									<figure> 
+									<img src="/img/productos/<%=producto.img %>"></img>
+								</figure>
 								</div>
-								<h3 id=carroAgregar-nombre>
-									<%= producto.nombre %>
-								</h3>
+								<h3 id=carroAgregar-nombre><%= producto.nombre %></h3>
 								<p class="product-price"> $<%= producto.precio %></p>
 								<a class="cart-btn" onClick="agregar()"><i class="fas fa-shopping-cart" ></i> Agregar</a>
 							</div>

@@ -91,12 +91,12 @@
 							<div class="Cuadro">
 								<div id="form_status"></div>
 								<div class="textoProductos">
-									<form method="post" id="fruitkha-contact" action="">
+									<form method="post" id="fruitkha-contact" action="/productos/agregar" enctype="multipart/form-data">
 										<h1>Agregar un nuevo producto</h1>
 										<p><input type="text" placeholder="Producto" name="producto" id="producto"
 												required></p>
-										<p> <input type="text" placeholder="Imagen (Link)" name="imagen" id="imagen"
-												required></p>
+												<p> <input class="form-control form-control-lg" type="file" placeholder="Imagen (Link)" name="imagen" id="imagen" required>
+												</p>
 										<p><input type="number" placeholder="Precio" name="precio" id="precio" required>
 										</p>
 										<p><textarea name="description" id="description" cols="15" rows="5"
@@ -133,7 +133,7 @@
 											readonly="true"> <%= productos.nombre %> </textarea>
 									</td>
 									<td width="5%">
-										<img src="<%= productos.img %>" alt="">
+										<img src="/img/productos/<%= productos.img %>" alt="">
 									</td>
 									<td width="3%">
 										<input id="editar" class="edicionNum" type="number" name="precio"
@@ -289,8 +289,6 @@
 					</div>
 				</div>
 			</div>
-
-
 			<!-- Lista de noticias -->
 			<div class="table-responsive">
 				<div class="Consultas" id="consultas">
@@ -314,7 +312,7 @@
 											readonly="true"> <%= noticias.titulo %></textarea>
 									</td>
 									<td width="5%">
-										<img src="<%= noticias.img %>" alt="">
+										<img src="img/noticias/<%=noticias.img%>" alt=""> 
 									</td>
 									<td width="5%"">
 									<textarea id="editar" class="edicion" type="text" name="publicador" value="<%= noticias.publicador %>"

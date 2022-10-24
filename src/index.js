@@ -83,15 +83,53 @@ app.post('/consultas/eliminar/:id', deleteNote)
 
 const productos = require('./models/productos.js');
 //Productos
-app.post("/admin", function (req, res) {
-  let nuevoProducto = new productos({
-    nombre: req.body.producto,
-    img: req.body.imagen,
-    precio: req.body.precio,
-    descripcion: req.body.description,
-  });
-  nuevoProducto.save();
-  res.redirect('/admin')
+app.post("/productos/agregar", function (req, res) {
+  const form = new formidable.IncomingForm()
+  form.parse(req, async (err, fields, files) => {
+
+    try {
+      if (err) {
+        throw new Error("Falló")
+      }
+      const file = files.imagen
+    
+      if (file.originalFilename === "") {
+        throw new Error("Agrega una imagen")
+      }
+      if (!(file.mimetype === "image/jpeg" || file.mimetype === "image/png")) {
+        throw new Error("Formato no válido, prueba con .png o .jpg")
+      }
+
+      if (file.size > 50 * 1024 * 1024) {
+        throw new Error("Ingrese un archivo de menos de 5mb")
+      }
+      let dirFile = path.join(__dirname, `./public/img/productos/${file.originalFilename}`)
+
+      fs.copyFile(file.filepath, dirFile, function (err) {
+        if (err) throw err;
+        // req.flash('Archivo subido');
+        // res.end();
+      });
+      req.flash("mensajes", [{ msg: "Archivo subido" }])
+      let nuevo = files.imagen.originalFilename
+
+      let nuevoProducto = new productos({
+        nombre: fields.producto,
+        img: nuevo,
+        precio: fields.precio,
+        descripcion: fields.description,
+      });
+      nuevoProducto.save();
+    }
+    catch (error) {
+      req.flash("mensajes", [{ msg: error.message }])
+    }
+    finally {
+      res.redirect('/admin')
+    }
+  })
+
+  // res.redirect('/admin')
 })
 
 const deleteProductos = async (req, res) => {
@@ -133,62 +171,60 @@ app.post("/admin/noticias", async function (req, res) {
 
   // console.log(form)
 
-  form.maxFileSize = 50 * 1024 * 1024
-
   form.parse(req, async (err, fields, files) => {
+
     try {
-      if (err){
+
+      if (err) {
         throw new Error("Falló")
-    }
+      }
+      let noticiaExistente = await noticias.findOne({ titulo: fields.titulo })
+      console.log(noticiaExistente)
+      if (noticiaExistente) {
+        throw new Error('Noticia ya creada')
+      }
       // console.log(files)
       const file = files.img
-      
-      if(file.originalFilename === ""){
+
+      if (file.originalFilename === "") {
         throw new Error("Agrega una imagen")
       }
-      if(!(file.mimetype === "image/jpeg" || file.mimetype === "image/png")){
+      if (!(file.mimetype === "image/jpeg" || file.mimetype === "image/png")) {
         throw new Error("Formato no válido, prueba con .png o .jpg")
       }
 
-      if(file.size > 50 * 1024 * 1024){
+      if (file.size > 50 * 1024 * 1024) {
         throw new Error("Ingrese un archivo de menos de 5mb")
       }
 
-      const extension = file.mimetype.split('/')[1]
-      const dirFile = path.join(__dirname,  `./public/img/noticias/${fields.titulo}.${extension}`)
+      let dirFile = path.join(__dirname, `./public/img/noticias/${file.originalFilename}`)
 
-      fs.copyFile(file.filepath,dirFile, function (err) {
+      fs.copyFile(file.filepath, dirFile, function (err) {
         if (err) throw err;
-        res.write('File uploaded and moved!');
-        res.end();
-    });
+        // req.flash('Archivo subido');
+        // res.end();
+      });
 
 
-      console.log(dirFile)
-      req.flash("mensajes", [{msg:"Todo bien"}])
-
-      res.redirect('/admin')
+      req.flash("mensajes", [{ msg: "Archivo subido" }])
+      let nuevo = files.img.originalFilename
+      let nuevaNoticia = await new noticias({
+        titulo: fields.titulo,
+        resumen: fields.resumen,
+        texto: fields.texto,
+        img: nuevo,
+        publicador: fields.publicador,
+      });
+      await nuevaNoticia.save();
     }
     catch (error) {
       req.flash("mensajes", [{ msg: error.message }])
-      res.redirect("/admin")
+    }
+    finally {
+      res.redirect('/admin')
     }
   })
 
-
-  // console.log(req.body)
-
-  // let nuevaNoticia = await new noticias({
-  //   titulo: req.body.titulo,
-  //   resumen: req.body.resumen,
-  //   texto: req.body.texto,
-  //   // img: req.body.img,
-  //   publicador: req.body.publicador,
-  // });
-  // nuevaNoticia.save();
-  // res.redirect('/admin')
-
-  // res.redirect('/admin')
 
 
 })

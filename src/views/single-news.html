@@ -69,8 +69,10 @@
 				<div class="row">
 					<div class="col-lg-8 offset-lg-2 text-center">
 						<div class="breadcrumb-text">
-							
-							<h1><%=noticiasMostrar.titulo %></h1>
+
+							<h1>
+								<%=noticiasMostrar.titulo %>
+							</h1>
 						</div>
 					</div>
 				</div>
@@ -85,34 +87,44 @@
 					<div class="col-lg-8">
 						<div class="single-article-section">
 							<div class="single-article-text">
-								<div> <img src="<%=noticiasMostrar.img %>" alt="">
+								<div> <img src="/img/noticias/<%=noticiasMostrar.img%>" alt="<%=noticiasMostrar.img%>">
 								</div>
 								<p class="blog-meta">
-									<span class="author"><i class="fas fa-user"></i> <%= noticiasMostrar.publicador %></span>
-									<span class="date"><i class="fas fa-calendar"></i> <%=noticiasMostrar.createdAt.toDateString() %> </span>
+									<span class="author"><i class="fas fa-user"></i>
+										<%= noticiasMostrar.publicador %>
+									</span>
+									<span class="date"><i class="fas fa-calendar"></i>
+										<%=noticiasMostrar.createdAt.toDateString() %>
+									</span>
 								</p>
-								<h1><%=noticiasMostrar.titulo %></h1>
-								 <h4> <%=noticiasMostrar.resumen %> </h4>
-								 <p> <%=noticiasMostrar.texto %> </p>
+								<h1>
+									<%=noticiasMostrar.titulo %>
+								</h1>
+								<h4>
+									<%=noticiasMostrar.resumen %>
+								</h4>
+								<p>
+									<%=noticiasMostrar.texto %>
+								</p>
 							</div>
 
 							<div class="comments-list-wrap">
-							
-								</div>
-							</div>
 
-							<div class="comment-template">
-								
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="sidebar-section">
-							
+
+						<div class="comment-template">
+
 						</div>
 					</div>
 				</div>
+				<div class="col-lg-4">
+					<div class="sidebar-section">
+
+					</div>
+				</div>
 			</div>
+		</div>
 		</div>
 		<!-- end single article section -->
 
@@ -120,31 +132,31 @@
 		<!-- end logo carousel -->
 
 		<!-- footer -->
-		
+
 		<%- include ('partials/footer.html') %>
 
-		<!-- end copyright -->
+			<!-- end copyright -->
 
-		<!-- jquery -->
-		<script src="/js/jquery-1.11.3.min.js"></script>
-		<!-- bootstrap -->
-		<script src="/bootstrap/js/bootstrap.min.js"></script>
-		<!-- count down -->
-		<script src="/js/jquery.countdown.js"></script>
-		<!-- isotope -->
-		<script src="/js/jquery.isotope-3.0.6.min.js"></script>
-		<!-- waypoints -->
-		<script src="/js/waypoints.js"></script>
-		<!-- owl carousel -->
-		<script src="/js/owl.carousel.min.js"></script>
-		<!-- magnific popup -->
-		<script src="/js/jquery.magnific-popup.min.js"></script>
-		<!-- mean menu -->
-		<script src="/js/jquery.meanmenu.min.js"></script>
-		<!-- sticker js -->
-		<script src="/js/sticker.js"></script>
-		<!-- main js -->
-		<script src="/js/main.js"></script>
+			<!-- jquery -->
+			<script src="/js/jquery-1.11.3.min.js"></script>
+			<!-- bootstrap -->
+			<script src="/bootstrap/js/bootstrap.min.js"></script>
+			<!-- count down -->
+			<script src="/js/jquery.countdown.js"></script>
+			<!-- isotope -->
+			<script src="/js/jquery.isotope-3.0.6.min.js"></script>
+			<!-- waypoints -->
+			<script src="/js/waypoints.js"></script>
+			<!-- owl carousel -->
+			<script src="/js/owl.carousel.min.js"></script>
+			<!-- magnific popup -->
+			<script src="/js/jquery.magnific-popup.min.js"></script>
+			<!-- mean menu -->
+			<script src="/js/jquery.meanmenu.min.js"></script>
+			<!-- sticker js -->
+			<script src="/js/sticker.js"></script>
+			<!-- main js -->
+			<script src="/js/main.js"></script>
 
 </body>
 

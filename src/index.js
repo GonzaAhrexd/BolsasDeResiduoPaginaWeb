@@ -101,7 +101,7 @@ app.post("/productos/agregar", function (req, res) {
       }
 
       if (file.size > 50 * 1024 * 1024) {
-        throw new Error("Ingrese un archivo de menos de 5mb")
+        throw new Error("Ingrese un archivo de menos de 50mb")
       }
       let dirFile = path.join(__dirname, `./public/img/productos/${file.originalFilename}`)
 
@@ -169,7 +169,6 @@ app.post('/noticias/eliminar/:id', deleteNoticia)
 app.post("/admin/noticias", async function (req, res) {
   const form = new formidable.IncomingForm()
 
-  // console.log(form)
 
   form.parse(req, async (err, fields, files) => {
 
@@ -179,11 +178,9 @@ app.post("/admin/noticias", async function (req, res) {
         throw new Error("Falló")
       }
       let noticiaExistente = await noticias.findOne({ titulo: fields.titulo })
-      console.log(noticiaExistente)
       if (noticiaExistente) {
         throw new Error('Noticia ya creada')
       }
-      // console.log(files)
       const file = files.img
 
       if (file.originalFilename === "") {
@@ -232,8 +229,7 @@ app.post("/admin/noticias", async function (req, res) {
 //Editar
 
 app.post("/noticias/editar/:id", async function (req, res) {
-  console.log(req.params.id)
-  console.log(req.body.texto)
+
   try {
     await noticias.findByIdAndUpdate(req.params.id, {
       titulo: req.body.titulo.trim(),

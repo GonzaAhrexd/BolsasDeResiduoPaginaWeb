@@ -9,7 +9,7 @@ module.exports = async (req,res,next) => {
         return next()
    
 }
-    res.redirect('/login')
+
 
     req.flash("mensajes", [{msg: "No cuenta con permisos de administrador"}])
     return res.redirect('/perfil')

@@ -223,6 +223,7 @@ router.get('/admin', verificarAdmin, async (req, res) => {
                                 usuario: usuarioLogeado,
                                 estaLog: estaLog,
                                 userAdmin: usersAdmin,
+                                mensajes: req.flash("mensajes") 
                             }
                         )
                     })

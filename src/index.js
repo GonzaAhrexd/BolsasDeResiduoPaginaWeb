@@ -10,10 +10,12 @@ const passport = require('passport') //Módulo para Autenticar
 const morgan = require('morgan') //Módulo para metodos https
 const session = require('express-session') //Módulo session
 const cookieParser = require('cookie-parser') //Módulo para administrar Cookies
-const {body, validationResult} = require('express-validator')
+const { body, validationResult } = require('express-validator')
+const formidable = require('formidable');
+const fs = require('fs')
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
-console.log("Servidor funcionando en puerto "+port)
+console.log("Servidor funcionando en puerto " + port)
 
 app.listen(port)
 app.set('views', path.join(__dirname, 'views'))
@@ -34,21 +36,21 @@ require('dotenv').config({
 
 app.use(
   session({
-  secret: process.env.secret,
-  resave: false,
-  saveUninitialized: false,
-  name: process.env.name
-}))
-app.use(flash());  
+    secret: process.env.secret,
+    resave: false,
+    saveUninitialized: false,
+    name: process.env.name
+  }))
+app.use(flash());
 
 app.use(passport.initialize())
 app.use(passport.session())
 
 
-passport.serializeUser((user, done) => done(null, {id: user.id, name: user.name, email: user.email})) 
-passport.deserializeUser(async(user,done)=>{
+passport.serializeUser((user, done) => done(null, { id: user.id, name: user.name, email: user.email }))
+passport.deserializeUser(async (user, done) => {
   const userDB = await usuarios.findById(user.id)
-  return done(null, {id: userDB.id, name: userDB.name, email: userDB.email, admin: userDB.admin})
+  return done(null, { id: userDB.id, name: userDB.name, email: userDB.email, admin: userDB.admin })
 })
 //req.user
 // Rutas
@@ -126,95 +128,148 @@ const deleteNoticia = async (req, res) => {
 app.post('/noticias/eliminar/:id', deleteNoticia)
 
 //Agregar
-app.post("/admin/noticias", function (req, res) {
-  let nuevaNoticia = new noticias({
-    titulo: req.body.titulo,
-    resumen: req.body.resumen,
-    texto: req.body.texto,
-    img: req.body.img,
-    publicador: req.body.publicador,
-  });
-  nuevaNoticia.save();
-  res.redirect('/admin')
+app.post("/admin/noticias", async function (req, res) {
+  const form = new formidable.IncomingForm()
+
+  // console.log(form)
+
+  form.maxFileSize = 50 * 1024 * 1024
+
+  form.parse(req, async (err, fields, files) => {
+    try {
+      if (err){
+        throw new Error("Falló")
+    }
+      // console.log(files)
+      const file = files.img
+      
+      if(file.originalFilename === ""){
+        throw new Error("Agrega una imagen")
+      }
+      if(!(file.mimetype === "image/jpeg" || file.mimetype === "image/png")){
+        throw new Error("Formato no válido, prueba con .png o .jpg")
+      }
+
+      if(file.size > 50 * 1024 * 1024){
+        throw new Error("Ingrese un archivo de menos de 5mb")
+      }
+
+      const extension = file.mimetype.split('/')[1]
+      const dirFile = path.join(__dirname,  `./public/img/noticias/${fields.titulo}.${extension}`)
+
+      fs.copyFile(file.filepath,dirFile, function (err) {
+        if (err) throw err;
+        res.write('File uploaded and moved!');
+        res.end();
+    });
+
+
+      console.log(dirFile)
+      req.flash("mensajes", [{msg:"Todo bien"}])
+
+      res.redirect('/admin')
+    }
+    catch (error) {
+      req.flash("mensajes", [{ msg: error.message }])
+      res.redirect("/admin")
+    }
+  })
+
+
+  // console.log(req.body)
+
+  // let nuevaNoticia = await new noticias({
+  //   titulo: req.body.titulo,
+  //   resumen: req.body.resumen,
+  //   texto: req.body.texto,
+  //   // img: req.body.img,
+  //   publicador: req.body.publicador,
+  // });
+  // nuevaNoticia.save();
+  // res.redirect('/admin')
+
+  // res.redirect('/admin')
+
+
 })
 
 //Editar
 
-app.post("/noticias/editar/:id",async function (req, res) {
+app.post("/noticias/editar/:id", async function (req, res) {
   console.log(req.params.id)
   console.log(req.body.texto)
-  try{ 
-  await noticias.findByIdAndUpdate(req.params.id,{
-    titulo: req.body.titulo.trim(),
-    resumen: req.body.resumen.trim(),
-    texto: req.body.texto.trim(),
-    publicador: req.body.publicador.trim(),
-  })
-  res.redirect('/admin')
-}
-catch(error){
-  return res.redirect('/')
-}
+  try {
+    await noticias.findByIdAndUpdate(req.params.id, {
+      titulo: req.body.titulo.trim(),
+      resumen: req.body.resumen.trim(),
+      texto: req.body.texto.trim(),
+      publicador: req.body.publicador.trim(),
+    })
+    res.redirect('/admin')
+  }
+  catch (error) {
+    return res.redirect('/')
+  }
 })
 
 
 //Usuarios
 //Login registro
 
-const usuarios = require('./models/usuarios.js')
+const usuarios = require('./models/usuarios.js');
+
 
 app.post("/login/register", [
-  body("nameREG" , "Ingrese un nombre válido").trim().notEmpty().escape(),
-  body("emailREG" , "Ingrese un email válido").trim().isEmail().normalizeEmail(),
-  body("passREG",  "Contraseña no válida")
-  .trim()
-  .isLength({min: 6})
-  .escape()
-  .custom((value, {req}) =>{
-    if(value !== req.body.pass2REG)
-    {
-      throw new Error('No coincide las contraseñas')
-    }
-    else{ 
-    return value;
-  }
-  }) 
-], 
+  body("nameREG", "Ingrese un nombre válido").trim().notEmpty().escape(),
+  body("emailREG", "Ingrese un email válido").trim().isEmail().normalizeEmail(),
+  body("passREG", "Contraseña no válida")
+    .trim()
+    .isLength({ min: 6 })
+    .escape()
+    .custom((value, { req }) => {
+      if (value !== req.body.pass2REG) {
+        throw new Error('No coincide las contraseñas')
+      }
+      else {
+        return value;
+      }
+    })
+],
 
-async function (req, res) {
-  const errors = validationResult(req)
-  if(!errors.isEmpty()){
-    req.flash("mensajes", errors.array())
-    return res.redirect('/login')
-  }
+  async function (req, res) {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      req.flash("mensajes", errors.array())
+      return res.redirect('/login')
+    }
 
-  const { nameREG, emailREG, passREG } = req.body;
-  try {
-    let userExistente = await usuarios.findOne({ email: req.body.emailREG })
-    if (userExistente) {
-      throw new Error('Usuario ya existe')
+    const { nameREG, emailREG, passREG } = req.body;
+    try {
+      let userExistente = await usuarios.findOne({ email: req.body.emailREG })
+      if (userExistente) {
+        throw new Error('Usuario ya existe')
+      }
+      else {
+        let nuevoUsuario = new usuarios({
+          name: nameREG, email: emailREG, pass: passREG, admin: false
+        });
+        nuevoUsuario.save();
+        res.redirect('/')
+      }
     }
-    else {
-      let nuevoUsuario = new usuarios({
-        name: nameREG, email: emailREG, pass: passREG, admin: false
-      });
-      nuevoUsuario.save();
-      res.redirect('/')
+    catch (Error) {
+      req.flash("mensajes", [{ msg: Error.message }])
+      return res.redirect('/login')
     }
-  }
-  catch (Error) {
-    req.flash("mensajes", [{msg: Error.message}])
-    return res.redirect('/login')
-  }
-})
+  })
 
 //Usuarios Autenticación
 
 app.post("/login/auth", [
-  body("emailLOG" , "Ingrese un email válido").trim().isEmail().normalizeEmail()
+  body("emailLOG", "Ingrese un email válido").trim().isEmail().normalizeEmail()
 ], async function (req, res) {
   const errors = validationResult(req)
-  if(!errors.isEmpty()){
+  if (!errors.isEmpty()) {
     req.flash("mensajes", errors.array())
     return res.redirect('/login')
   }
@@ -225,19 +280,19 @@ app.post("/login/auth", [
     const user = await usuarios.findOne({ email: emailLOG })
     if (!user) throw new Error('Usuario no existente')
 
-    if (!(await user.comparePass(passLOG))){
-       throw new Error('Contraseña incorrecta')
+    if (!(await user.comparePass(passLOG))) {
+      throw new Error('Contraseña incorrecta')
     }
-       else{ 
-    req.login(user, function(err){
-      if(err) throw new Error('Error al crear la sesión')
-      
-      return res.redirect('/')
-    })
-  
-  }
+    else {
+      req.login(user, function (err) {
+        if (err) throw new Error('Error al crear la sesión')
+
+        return res.redirect('/')
+      })
+
+    }
   } catch (Error) {
-    req.flash("mensajes", [{msg: Error.message}])
+    req.flash("mensajes", [{ msg: Error.message }])
     return res.redirect('/login')
     // res.json({ Error: Error.message })
   }
@@ -246,65 +301,65 @@ app.post("/login/auth", [
 
 //Editar perfil
 
-app.post("/perfil/edicion/:id",async function (req, res) {
+app.post("/perfil/edicion/:id", async function (req, res) {
 
-  try{ 
-  await usuarios.findByIdAndUpdate(req.params.id,{
-    nombreCompleto: req.body.nombreCompleto.trim(),
-    telefono: req.body.telefono.trim(),
-    direccion: req.body.direccion.trim(),
-    postal: req.body.postal.trim(),
-    provincia: req.body.provincia.trim(),
-    localidad: req.body.localidad.trim()
-  })
-  res.redirect('/perfil')
-}
-catch(error){
+  try {
+    await usuarios.findByIdAndUpdate(req.params.id, {
+      nombreCompleto: req.body.nombreCompleto.trim(),
+      telefono: req.body.telefono.trim(),
+      direccion: req.body.direccion.trim(),
+      postal: req.body.postal.trim(),
+      provincia: req.body.provincia.trim(),
+      localidad: req.body.localidad.trim()
+    })
+    res.redirect('/perfil')
+  }
+  catch (error) {
 
-  return res.redirect('/')
+    return res.redirect('/')
 
-}
+  }
 })
 
 
-app.post("/productos/editar/:id",async function (req, res) {
+app.post("/productos/editar/:id", async function (req, res) {
 
-  try{ 
-  await productos.findByIdAndUpdate(req.params.id,{
-    nombre: req.body.nombre.trim(),
-    precio: req.body.precio.trim(),
-    descripcion: req.body.descripcion.trim(),
-  })
-  res.redirect('/admin')
-}
-catch(error){
-  return res.redirect('/')
-}
+  try {
+    await productos.findByIdAndUpdate(req.params.id, {
+      nombre: req.body.nombre.trim(),
+      precio: req.body.precio.trim(),
+      descripcion: req.body.descripcion.trim(),
+    })
+    res.redirect('/admin')
+  }
+  catch (error) {
+    return res.redirect('/')
+  }
 })
 
-app.post("/admin/agregar", async function (req,res){
-  
-  try{ 
-    await usuarios.findOneAndUpdate({email: req.body.correoNuevoAdmin},{
+app.post("/admin/agregar", async function (req, res) {
+
+  try {
+    await usuarios.findOneAndUpdate({ email: req.body.correoNuevoAdmin }, {
       admin: true
     })
     res.redirect('/admin')
   }
-  catch(error){
+  catch (error) {
     return res.redirect('/')
   }
 
 })
 
 
-app.post("/admin/eliminar/:id",async function (req, res) {
-  try{ 
-    await usuarios.findByIdAndUpdate(req.params.id,{
+app.post("/admin/eliminar/:id", async function (req, res) {
+  try {
+    await usuarios.findByIdAndUpdate(req.params.id, {
       admin: false
     })
     res.redirect('/admin')
   }
-  catch(error){
+  catch (error) {
     return res.redirect('/')
   }
 })

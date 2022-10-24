@@ -3,12 +3,12 @@ const usuarios = require('../models/usuarios.js')
 const flash = require('connect-flash') //Módulo flash 
 
 module.exports = async (req,res,next) => {
-    if(req.isAuthenticated()){
+    // if(req.isAuthenticated()){
         
-        if(req.user.admin)
+        // if(req.user.admin)
         return next()
    
-}
+// }
     // res.redirect('/login')
 
     req.flash("mensajes", [{msg: "No cuenta con permisos de administrador"}])

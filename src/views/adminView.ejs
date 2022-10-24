@@ -76,7 +76,11 @@
 				</div>
 			</div>
 		</div>
-
+		<span> <%mensajes.forEach(mensaje=> { %>
+			<div class="alert alert-dark" align="center">  <%= mensaje.msg %> </div>   
+	
+			 <%}) %>
+		  </span>
 		<!-- Agregar Productos -->
 
 		<section class="productos" id="productos">
@@ -261,11 +265,11 @@
 							<div class="Cuadro">
 								<div id="form_status"></div>
 								<div class="textoProductos">
-									<form action="/admin/noticias" method="POST">
+									<form action="/admin/noticias" method="POST" enctype="multipart/form-data">
 										<h1>Agregar una nueva noticia</h1>
 										<p><input type="text" placeholder="Titulo" name="titulo" id="titulo" required>
 										</p>
-										<p> <input type="text" placeholder="Imagen (Link)" name="img" id="img" required>
+										<p> <input class="form-control form-control-lg" type="file" placeholder="Imagen (Link)" name="img" id="img">
 										</p>
 										<p><input type="text" placeholder="Autor" name="publicador" id="publicador"
 												value="<%= usuario.nombreCompleto %>" required>

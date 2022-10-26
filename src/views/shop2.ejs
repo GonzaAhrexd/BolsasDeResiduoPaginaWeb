@@ -77,12 +77,14 @@
 		<!-- end breadcrumb section -->
 
 		<!-- products -->
+
 		<div class="cart-section mt-150 mb-150">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-md-12">
 						<div class="cart-table-wrap">
-							<table class="cart-table" id="tablaCarro" style="display: none;">
+
+							<table class="cart-table" id="tablaCarro" style="display:none;">
 								<thead class="cart-table-head">
 									<tr class="table-head-row">
 										<th class="product-remove"></th>
@@ -90,37 +92,71 @@
 										<th class="product-name">Nombre</th>
 										<th class="product-price">Precio Unitario</th>
 										<th class="product-quantity">Cantidad</th>
+										<th class="product-buttons">Botones</th>
 										<th class="product-total">Total</th>
+									</tr>
 								</thead>
 								<tbody id="Productos">
-
-
-
-									</tr>
+									
 								</tbody>
+								<tfoot id="Total">
+								</tfoot>
+								
 							</table>
+						
+							<template id="template-carrito">
+								<tr class="table-body-row">
+									<td class="product-remove"><i class="far fa-window-close" style="cursor:pointer;"></i></a>
+									</td>
+									<td class="product-image"><img src="/img/products/product-img-1.jpg" alt="a">
+									</td>
+									<td class="product-name">Strawberry</td>
+									<td class="product-price">$85</td>
+									<td class="product-quantity">0</td>
+									<td class="product-buttons">
+									<button class="btn btn-info btn-sm">
+										+
+									</button>
+									<button class="btn btn-danger btn-sm">
+										-
+									</button></td>
+									<td class="product-total">1</td>
+								</tr>
+							</template>
+
+							<template id="template-footer">
+						<tr class="table-body-row">
+								<th scope="row" colspan="4">Total productos</th>
+								<td class="product-quantity" align="center">10</td>
+								<td align="center">
+									<button class="btn btn-danger btn-sm" id="vaciar-carrito">
+										Vaciar
+									</button>
+								</td>
+								<td class="font-weight-bold product-total" align="center">$ <span>5000</span></td>
+							</tr>
+							</template>
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="product-section mt-150 mb-150">
 			<div class="container">
 				<div class="row product-lists">
 					<%productosList.forEach(producto=> { %>
-						<div class="col-lg-4 col-md-6 text-center strawberry">
+						<div class="col-lg-4 col-md-6 text-center strawberry" id="items">
 							<div class="single-product-item">
 								<div class="product-image">
 									<figure>
-										<img src="/img/productos/<%=producto.img %>"></img>
+										<img class="imagenProducto" src="/img/productos/<%=producto.img %>"></img>
 									</figure>
 								</div>
-								<h3 id=carroAgregar-nombre id="nombreProductos">
-									<%= producto.nombre %>
-								</h3>
-								<p class="product-price"> $<%= producto.precio %>
-								</p>
-								<a class="cart-btn" id="agregar"><i class="fas fa-shopping-cart"></i>
+								<h3 id=carroAgregar-nombre id="nombreProductos"><%= producto.nombre %></h3>
+								<p class="product-price">$<%= producto.precio %></p>
+								<a class="cart-btn" id="<%= producto.id %>"><i class="fas fa-shopping-cart"></i>
 									Agregar</a>
 							</div>
 						</div>

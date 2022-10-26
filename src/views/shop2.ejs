@@ -83,7 +83,6 @@
 				<div class="row">
 					<div class="col-lg-8 col-md-12">
 						<div class="cart-table-wrap">
-
 							<table class="cart-table" id="tablaCarro" style="display:none;">
 								<thead class="cart-table-head">
 									<tr class="table-head-row">
@@ -92,7 +91,7 @@
 										<th class="product-name">Nombre</th>
 										<th class="product-price">Precio Unitario</th>
 										<th class="product-quantity">Cantidad</th>
-										<th class="product-buttons">Botones</th>
+										<th class="product-buttons">Acción</th>
 										<th class="product-total">Total</th>
 									</tr>
 								</thead>
@@ -126,23 +125,60 @@
 
 							<template id="template-footer">
 						<tr class="table-body-row">
-								<th scope="row" colspan="4">Total productos</th>
+
+								<th scope="row" colspan="4"><button class="btn btn-danger btn-sm" id="vaciar-carrito">
+										Vaciar
+									</button> Total de los productos </th>
 								<td class="product-quantity" align="center">10</td>
 								<td align="center">
-									<button class="btn btn-danger btn-sm" id="vaciar-carrito">
-										Vaciar
+									</form>
+									
+									<button class="btn btn-info btn-sm" id="next">
+										Siguiente
 									</button>
 								</td>
 								<td class="font-weight-bold product-total" align="center">$ <span>5000</span></td>
 							</tr>
 							</template>
-							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<div class="contact-from-section mt-150 mb-150">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 mb-5 mb-lg-0">
+		<div id="form_status"></div>
+		<div class="contact-form" id="checkout" style="display:none;">
+			<form method="post" id="fruitkha-contact" action="/tienda/checkout">
+				<p>
+					<input type="text" placeholder="Nombre" name="nombre" id="nombre" value="<%= usuario.nombreCompleto  %>"required>
+					<input type="email" placeholder="Email" name="email" id="email" value="<%= usuario.email  %>" required>
+				</p>
+				<p>
+					<input type="tel" placeholder="Provincia" name="provincia" id="provincia" value="<%= usuario.provincia  %>">
+					<input type="text" placeholder="Localidad" name="localidad" id="localidad" value="<%= usuario.localidad  %>"required>
+				</p>
+				<p>
+					<input type="tel" placeholder="Dirección" name="direccion" id="telefono" value="<%= usuario.direccion  %>">
+					<input type="text" placeholder="Código Postal" name="codPos" id="codPos" value="<%= usuario.postal  %>"required>
+				</p>
+				<p id="detalles">
+					
+				</p>
+				<!-- <p><textarea name="mensaje" id="message" cols="30" rows="10" placeholder="Mensaje"
+						required></textarea></p> -->
+				<input type="hidden" name="token" value="FsWga4&@f6aw" />
+				<p><input type="submit" value="Enviar pedido"></p>
+
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+	
 		<div class="product-section mt-150 mb-150">
 			<div class="container">
 				<div class="row product-lists">

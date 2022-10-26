@@ -396,3 +396,19 @@ app.post("/admin/eliminar/:id", async function (req, res) {
   }
 })
 
+const pedido = require('./models/pedidos.js');
+app.post("/tienda/checkout", function (req, res) {
+  let nuevoPedido = new pedido({
+    nombre: req.body.nombre,
+    email: req.body.email,
+    telefono: req.body.telefono,
+    provincia: req.body.provincia,
+    localidad: req.body.localidad,
+    direccion: req.body.direccion,
+    postal: req.body.codPos,
+    productos: req.body.productos,
+    precio: req.body.precio,
+  });
+  nuevoPedido.save();
+  res.redirect('/tienda')
+})

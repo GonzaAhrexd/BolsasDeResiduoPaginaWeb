@@ -160,38 +160,38 @@ router.get('/contact', (req, res) => {
 })
 
 //Tienda
-router.get('/pago', (req, res) => {
-    let usuarioLogeado = " "
-    let estaLog = false
-    if (req.isAuthenticated()) {
-        usuarioLogeado = req.user
-        estaLog = true
-    }
-    res.render('checkout.html',
-        {
-            title: 'Pago',
-            usuario: usuarioLogeado,
-            estaLog: estaLog
-        }
-    )
-})
+// router.get('/pago', (req, res) => {
+//     let usuarioLogeado = " "
+//     let estaLog = false
+//     if (req.isAuthenticated()) {
+//         usuarioLogeado = req.user
+//         estaLog = true
+//     }
+//     res.render('checkout.html',
+//         {
+//             title: 'Pago',
+//             usuario: usuarioLogeado,
+//             estaLog: estaLog
+//         }
+//     )
+// })
 
 
-router.get('/carro', (req, res) => {
-    let usuarioLogeado = " "
-    let estaLog = false
-    if (req.isAuthenticated()) {
-        usuarioLogeado = req.user
-        estaLog = true
-    }
-    res.render('cart.html',
-        {
-            title: 'Carro',
-            usuario: usuarioLogeado,
-            estaLog: estaLog
-        }
-    )
-})
+// router.get('/carro', (req, res) => {
+//     let usuarioLogeado = " "
+//     let estaLog = false
+//     if (req.isAuthenticated()) {
+//         usuarioLogeado = req.user
+//         estaLog = true
+//     }
+//     res.render('cart.html',
+//         {
+//             title: 'Carro',
+//             usuario: usuarioLogeado,
+//             estaLog: estaLog
+//         }
+//     )
+// })
 
 const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');
@@ -237,11 +237,11 @@ router.get('/admin', verificarAdmin, async (req, res) => {
 const productos = require('../models/productos.js');
 const { default: mongoose } = require('mongoose');
 
-router.get('/tienda', (req, res) => {
+router.get('/tienda', async (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
     if (req.isAuthenticated()) {
-        usuarioLogeado = req.user
+        usuarioLogeado = await usuarios.findOne({ email: req.user.email })
         estaLog = true
     }
     productos.find({}, function (err, productos) {

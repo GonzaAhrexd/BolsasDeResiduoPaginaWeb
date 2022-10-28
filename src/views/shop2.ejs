@@ -34,7 +34,7 @@
 	<link rel="stylesheet" href="/css/main.css">
 	<!-- responsive -->
 	<link rel="stylesheet" href="/css/responsive.css">
-
+	<link rel="stylesheet" href="/css/productos.css">
 </head>
 
 <body>
@@ -98,9 +98,6 @@
 								<tbody id="Productos">
 									
 								</tbody>
-								<tfoot id="Total">
-								</tfoot>
-								
 							</table>
 						
 							<template id="template-carrito">
@@ -123,26 +120,34 @@
 								</tr>
 							</template>
 
-							<template id="template-footer">
-						<tr class="table-body-row">
-
-								<th scope="row" colspan="4"><button class="btn btn-danger btn-sm" id="vaciar-carrito">
-										Vaciar
-									</button> Total de los productos </th>
-								<td class="product-quantity" align="center">10</td>
-								<td align="center">
-									</form>
-									
-									<button class="btn btn-info btn-sm" id="next">
-										Siguiente
-									</button>
-								</td>
-								<td class="font-weight-bold product-total" align="center">$ <span>5000</span></td>
-							</tr>
-							</template>
 						</div>
 					</div>
+					<div class="col-lg-4" id="carritoTotal" style="display:none;">
+						<div class="total-section">
+							<table class="total-table">
+								<thead class="total-table-head">
+									<tr class="table-total-row">
+										<th colspan="2">Total de productos</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="total-data">
+										<td><strong>Cantidad: </strong></td>
+										<td id="quantity">0</td>
+									</tr>
+									<tr class="total-data">
+										<td><strong>Total: </strong></td>
+										<td id="price">$</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="cart-buttons">
+								<a id="delete" class="boxed-btn">Eliminar</a>
+								<a id="siguiente" class="boxed-btn black">Continuar</a>
+							</div>
+						</div>
 				</div>
+				
 			</div>
 		</div>
 
@@ -178,15 +183,24 @@
 	</div>
 </div>
 </div>
-	
+
 		<div class="product-section mt-150 mb-150">
 			<div class="container">
 				<div class="row product-lists">
 					<%productosList.forEach(producto=> { %>
 						<div class="col-lg-4 col-md-6 text-center strawberry" id="items">
+							<section class="modal">
+								<div class="modal__container">
+									<img src="/img/productos/<%=producto.img %>" class="modal__img">
+									<h2 class="modal__title"><%= producto.nombre %></h2>
+									<h4 class="modal__title">$<%= producto.precio %></h4>
+									<p class="modal__paragraph"><%= producto.descripcion %></p>
+									<a class="boxed-btn">Cerrar</a>
+								</div>
+							</section>
 							<div class="single-product-item">
 								<div class="product-image">
-									<figure>
+									<figure class="abrirModal">
 										<img class="imagenProducto" src="/img/productos/<%=producto.img %>"></img>
 									</figure>
 								</div>
@@ -196,6 +210,7 @@
 									Agregar</a>
 							</div>
 						</div>
+						
 						<% })%>
 				</div>
 			</div>

@@ -2,7 +2,6 @@
 let carro = document.getElementById("Productos")
 let objetosCarrito = []
 const tabla = document.getElementById("tablaCarro")
-const templateTotal = document.getElementById('template-footer').content
 const templateCarrito = document.getElementById('template-carrito').content
 let carrito = {}
 const items = document.querySelectorAll('#items')
@@ -11,6 +10,7 @@ const total = document.getElementById('Total')
 const fragment = document.createDocumentFragment()
 const checkout = document.getElementById('checkout')
 const detalles = document.getElementById('detalles')
+const TotalNuevo = document.getElementById('carritoTotal')
 items.forEach(item => {
     item.addEventListener('click', e => {
         addCarrito(e)
@@ -21,13 +21,28 @@ productos.addEventListener('click', e => {
 })
 
 const addCarrito = e => {
-
+    console.log(e.target.classList.contains('boxed-btn'))
     if (e.target.classList.contains('cart-btn')) {
-
-
         setCarrito(e.target.parentElement)
     }
+    if (e.target.classList.contains('imagenProducto')) {
+        console.log('a')
+        mostrarModal(e.target.parentElement)
+    }
+    if (e.target.classList.contains('boxed-btn')) {
+        cerrarModal(e.target.parentElement)
+        
+    }
     e.stopPropagation()
+}
+
+const mostrarModal = e => {
+    let mostrame = e.parentElement.parentElement.parentElement.querySelector('.modal')
+    mostrame.style.display = 'flex'
+}
+
+const cerrarModal = e =>{
+    e.parentElement.style.display = 'none'
 }
 
 const setCarrito = objeto => {
@@ -51,8 +66,10 @@ const setCarrito = objeto => {
 
 const mostrarCarrito = () => {
     tabla.style.display = 'block'
+    TotalNuevo.style.display = "block"
     if (Object.keys(carrito).length === 0) {
         tabla.style.display = 'none'
+        TotalNuevo.style.display = "none"
     }
     productos.innerHTML = ''
     Object.values(carrito).forEach(producto => {
@@ -64,7 +81,7 @@ const mostrarCarrito = () => {
         templateCarrito.querySelector('.btn-info').dataset.id = producto.id
         templateCarrito.querySelector('.btn-danger').dataset.id = producto.id
         templateCarrito.querySelector('.fa-window-close').dataset.id = producto.id
-        templateCarrito.querySelector('.product-total').textContent = producto.cantidad * producto.precio
+        templateCarrito.querySelector('.product-total').textContent = '$'+ producto.cantidad * producto.precio
 
         const clone = templateCarrito.cloneNode(true)
         fragment.appendChild(clone)
@@ -76,35 +93,25 @@ const mostrarCarrito = () => {
 }
 
 const pintarFooter = () => {
-    total.innerHTML = ''
-    if (Object.keys(carrito).length === 0) {
-        total.innerHTML = `
-        <th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>
-        `
-        return
-    }
 
     let nCantidad = Object.values(carrito).reduce((acc, { cantidad }) => acc + cantidad, 0)
     let nPrecio = Object.values(carrito).reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0)
+    TotalNuevo.querySelector('#quantity').textContent = nCantidad
+    TotalNuevo.querySelector('#price').textContent = '$'+nPrecio
+  
 
-    templateTotal.querySelectorAll('td')[0].textContent = nCantidad
-    templateTotal.querySelector('span').textContent = nPrecio
 
-    const clone = templateTotal.cloneNode(true)
-
-    fragment.appendChild(clone)
-    total.appendChild(fragment)
-
-    const btnEliminar = document.getElementById('vaciar-carrito')
+    const btnEliminar = document.getElementById('delete')
     btnEliminar.addEventListener('click', () => {
         carrito = {}
+        checkout.style.display = "none"
+        TotalNuevo.style.display = "none"
         mostrarCarrito()
     })
-    const next = document.getElementById('next')
+    const next = document.getElementById('siguiente')
     next.addEventListener('click',() =>{
         let listaProducto = []
         checkout.style.display = "block"
-        console.log(carrito)
         Object.values(carrito).forEach(producto => {
         listaProducto.push(`(${producto.cantidad})${producto.nombre}`)
         })

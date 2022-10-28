@@ -372,17 +372,20 @@ app.post("/productos/editar/:id", async function (req, res) {
 app.post("/admin/agregar", async function (req, res) {
 
   try {
-    await usuarios.findOneAndUpdate({ email: req.body.correoNuevoAdmin }, {
+    let a = await usuarios.findOne({email: req.body.correoNuevoAdmin})
+    console.log(a.name)
+
+    await usuarios.findOneAndUpdate({ email: req.body.correoNuevoAdmin },{
       admin: true
     })
     res.redirect('/admin')
   }
   catch (error) {
-    return res.redirect('/')
+    req.flash("mensajes", [{ msg: "No existe este correo" }])
+    return res.redirect('/admin')
   }
 
 })
-
 
 app.post("/admin/eliminar/:id", async function (req, res) {
   try {

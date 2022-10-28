@@ -177,21 +177,21 @@ router.get('/contact', (req, res) => {
 // })
 
 
-// router.get('/carro', (req, res) => {
-//     let usuarioLogeado = " "
-//     let estaLog = false
-//     if (req.isAuthenticated()) {
-//         usuarioLogeado = req.user
-//         estaLog = true
-//     }
-//     res.render('cart.html',
-//         {
-//             title: 'Carro',
-//             usuario: usuarioLogeado,
-//             estaLog: estaLog
-//         }
-//     )
-// })
+router.get('/carro', (req, res) => {
+    let usuarioLogeado = " "
+    let estaLog = false
+    if (req.isAuthenticated()) {
+        usuarioLogeado = req.user
+        estaLog = true
+    }
+    res.render('cart.html',
+        {
+            title: 'Carro',
+            usuario: usuarioLogeado,
+            estaLog: estaLog
+        }
+    )
+})
 
 const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');

@@ -53,7 +53,10 @@
                 <input type="password" placeholder="Contraseña" name="passREG" id="passREG" required/>
                 <input type="password" placeholder="Repite la contraseña" name="pass2REG" id="pass2REG" required/>
                 <input type="submit" value="Registrarse"> 
-                <button class="ghost" id="signInResponsive">Iniciar sesión</button>
+                <div class="responsive"> 
+                    <p>Para seguir conectado, ingresa con tus datos personales</p>
+                <button class="ghost" id="signInResponsive">Iniciar sesión</button> 
+                </div>   
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -64,7 +67,10 @@
                 <input type="password" placeholder="Contraseña" name="passLOG" id="passLOG" required/>
                 <!-- <a href="#">Olvidaste la contraseña?</a> -->
                 <input type="submit" value="Iniciar Sesión">
-                <button class="ghost responsive" id="signUpResponsive">Registrarse</button>      
+                <div class="responsive"> 
+                <p>Ingresa tus detalles personales y empieza tu viaje con nosotros.</p>
+                <button class="ghost" id="signUpResponsive">Registrarse</button>      
+                </div>
             </form>
                 
         </div>
@@ -72,12 +78,12 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
                     <h1>Bienvenido de vuelta</h1>
-                    <p>Para seguir conectado, ingresa con tus datos personales</p>
+                    <h6>Para seguir conectado, ingresa con tus datos personales</h6>
                     <button class="ghost" id="signIn">Iniciar Sesión</button>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <h1>Bienvenido!</h1>
-                    <p>Ingresa tus detalles personales y empieza tu viaje con nosotros.</p>
+                    <h6>Ingresa tus detalles personales y empieza tu viaje con nosotros.</h6>
                     <button class="ghost" id="signUp">Registrarse</button>
                 </div>
             </div>

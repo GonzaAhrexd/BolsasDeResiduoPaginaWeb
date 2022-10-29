@@ -69,7 +69,9 @@ button.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
-
+.responsive{
+	  display: block;
+}
 form {
 	background-color: #FFFFFF;
 	display: flex;

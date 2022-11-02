@@ -159,8 +159,11 @@
 		<div class="contact-form" id="checkout" style="display:none;">
 			<form method="post" id="fruitkha-contact" action="/tienda/checkout">
 				<p>
-					<input type="text" placeholder="Nombre" name="nombre" id="nombre" value="<%= usuario.nombreCompleto  %>"required>
-					<input type="email" placeholder="Email" name="email" id="email" value="<%= usuario.email  %>" required>
+					<input type="text" style="width: 99%;" placeholder="Nombre" name="nombre" id="nombre" value="<%= usuario.nombreCompleto  %>"required>
+				</p>
+				<p>
+				<input type="email" placeholder="Email" name="email" id="email" value="<%= usuario.email  %>" required>
+				<input type="text" placeholder="Telefono" name="telefono" id="telefono" value="<%= usuario.telefono  %>" required>
 				</p>
 				<p>
 					<input type="tel" placeholder="Provincia" name="provincia" id="provincia" value="<%= usuario.provincia  %>">

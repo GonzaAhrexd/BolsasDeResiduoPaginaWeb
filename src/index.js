@@ -415,3 +415,11 @@ app.post("/tienda/checkout", function (req, res) {
   nuevoPedido.save();
   res.redirect('/tienda')
 })
+
+const deletePedidos = async (req, res) => {
+  await pedido.findByIdAndDelete(req.params.id);
+  res.redirect("/admin")
+};
+
+app.post('/pedido/eliminar/:id', deletePedidos)
+

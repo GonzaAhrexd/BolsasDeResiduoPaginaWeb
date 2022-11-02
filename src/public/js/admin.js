@@ -3,6 +3,8 @@ const consultasDisplay = document.getElementById('consultas')
 const correosDisplay = document.getElementById('correosDisplay')
 const noticiasDisplay = document.getElementById('noticias')
 const administradorDisplay = document.getElementById('admin')
+const pedidosDisplay = document.getElementById('pedidos')
+
 function borrar() {
     alert("Eliminado")
 }
@@ -13,6 +15,17 @@ function productos() {
     correosDisplay.style.display = 'none'
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'none'
+    pedidosDisplay.style.display = 'none'
+    document.documentElement.scrollTop = 855
+}
+
+function pedidos() {
+    productosDisplay.style.display = 'none';
+    consultasDisplay.style.display = 'none';
+    correosDisplay.style.display = 'none'
+    noticiasDisplay.style.display = 'none'
+    administradorDisplay.style.display = 'none'
+    pedidosDisplay.style.display = 'block'
     document.documentElement.scrollTop = 855
 }
 
@@ -30,6 +43,7 @@ function correos() {
     correosDisplay.style.display = 'block';
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'none'
+    pedidosDisplay.style.display = 'none'
     document.documentElement.scrollTop = 855
 }
 
@@ -39,6 +53,7 @@ function noticias2() {
     correosDisplay.style.display = 'none';
     noticiasDisplay.style.display = 'block'
     administradorDisplay.style.display = 'none'
+    pedidosDisplay.style.display = 'none'
     document.documentElement.scrollTop = 855
 }
 
@@ -48,6 +63,7 @@ function admin() {
     correosDisplay.style.display = 'none';
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'block'
+    pedidosDisplay.style.display = 'none'
     document.documentElement.scrollTop = 855
 }
 

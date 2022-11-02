@@ -195,7 +195,7 @@ router.get('/carro', (req, res) => {
 
 const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');
-
+const pedidos = require('../models/pedidos.js')
 router.get('/admin', verificarAdmin, async (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
@@ -213,19 +213,22 @@ router.get('/admin', verificarAdmin, async (req, res) => {
             correos.find({}, function (err, correos) {
                 productos.find({}, function (err, productos) {
                     noticias.find({}, function (err, noticias) {
-                        res.render('adminView.ejs',
-                            {
-                                title: 'Admin',
-                                consultasList: consultas,
-                                correosList: correos,
-                                productosList: productos,
-                                noticiasList: noticias,
-                                usuario: usuarioLogeado,
-                                estaLog: estaLog,
-                                userAdmin: usersAdmin,
-                                mensajes: req.flash("mensajes") 
-                            }
-                        )
+                        pedidos.find({}, function (err, pedido) {
+                            res.render('adminView.ejs',
+                                {
+                                    title: 'Admin',
+                                    consultasList: consultas,
+                                    correosList: correos,
+                                    productosList: productos,
+                                    noticiasList: noticias,
+                                    usuario: usuarioLogeado,
+                                    pedidos: pedido,
+                                    estaLog: estaLog,
+                                    userAdmin: usersAdmin,
+                                    mensajes: req.flash("mensajes")
+                                }
+                            )
+                        })
                     })
                 })
             })

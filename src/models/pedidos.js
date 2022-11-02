@@ -11,6 +11,10 @@ const CarritoSchema= new mongoose.Schema({
         type:  String,
         required: true,
     },
+    telefono: {
+        type:  String,
+        required: true,
+    },
     provincia: {
         type:  String,
         required: true,
@@ -35,7 +39,9 @@ const CarritoSchema= new mongoose.Schema({
         type:  Number,
         required: true
     },
-
+},
+    {
+        timestamps: true
 })
 
 

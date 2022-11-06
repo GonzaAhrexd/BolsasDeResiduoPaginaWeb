@@ -120,14 +120,17 @@ router.get(`/noticia-detalles/:titulo`, async (req, res) => {
     try {
         let noticiaExistente = await noticias.findOne({ titulo: req.params.titulo.replace(/-/g, " ") })
         if (noticiaExistente) {
+            noticias.find({}, function (err, noticias) {
             res.render('single-news.html',
                 {
                     title: noticiaExistente.titulo,
                     noticiasMostrar: noticiaExistente,
                     usuario: usuarioLogeado,
-                    estaLog: estaLog
+                    estaLog: estaLog,
+                    noticiasTodo: noticias
                 })
-        }
+            })
+            }
         else {
             throw new Error('Noticia no existe')
         }

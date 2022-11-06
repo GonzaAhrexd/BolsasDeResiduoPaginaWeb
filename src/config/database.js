@@ -8,7 +8,7 @@ const mongoose = require ('mongoose')
 
 const user = process.env.user
 const pass = process.env.pass
-const dbName = process.env.dbname
+const dbName = process.env.dbName
 
 const uri = `mongodb+srv://${user}:${pass}@cluster0.uijihcv.mongodb.net/${dbName}?retryWrites=true&w=majority`;
  

@@ -11,6 +11,9 @@ const fragment = document.createDocumentFragment()
 const checkout = document.getElementById('checkout')
 const detalles = document.getElementById('detalles')
 const TotalNuevo = document.getElementById('carritoTotal')
+const botonCarro = document.getElementById('botonCarro')
+const cantCarro = document.getElementById('cantCarro')
+const pixeles_inicio = () => document.documentElement.scrollTop || document.body.scrollTop
 items.forEach(item => {
     item.addEventListener('click', e => {
         addCarrito(e)
@@ -18,6 +21,9 @@ items.forEach(item => {
 })
 productos.addEventListener('click', e => {
     btnAccion(e)
+})
+botonCarro.addEventListener('click', () => {
+    document.documentElement.scrollTop = 300
 })
 
 const addCarrito = e => {
@@ -65,15 +71,17 @@ const setCarrito = objeto => {
 }
 
 const mostrarCarrito = () => {
+    botonCarro.style.display = 'block'
     tabla.style.display = 'block'
     TotalNuevo.style.display = "block"
     if (Object.keys(carrito).length === 0) {
         tabla.style.display = 'none'
         TotalNuevo.style.display = "none"
+        botonCarro.style.display = 'none'
     }
     productos.innerHTML = ''
     Object.values(carrito).forEach(producto => {
-
+    
         templateCarrito.querySelector('.product-name').textContent = producto.nombre
         templateCarrito.querySelector('.product-image').querySelector('img').src = producto.img
         templateCarrito.querySelector('.product-price').textContent = '$' + producto.precio
@@ -98,7 +106,8 @@ const pintarFooter = () => {
     let nPrecio = Object.values(carrito).reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0)
     TotalNuevo.querySelector('#quantity').textContent = nCantidad
     TotalNuevo.querySelector('#price').textContent = '$'+nPrecio
-  
+    
+    cantCarro.innerHTML = nCantidad
 
 
     const btnEliminar = document.getElementById('delete')

@@ -79,7 +79,7 @@
 			</div>
 		</div>
 		<!-- end breadcrumb section -->
-
+		
 		<!-- single article section -->
 		<div class="mt-150 mb-150">
 			<div class="container">
@@ -117,10 +117,22 @@
 
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="sidebar-section">
-
+					<div class="col-lg-4">
+						<div class="sidebar-section">
+							<div class="recent-posts">
+								<h4>Noticias recientes</h4>
+								<ul>
+									<% if(noticiasTodo.length>5){ %>
+										<% for(let i=noticiasTodo.length;i>noticiasTodo.length-5;i--){ %>
+											<li><a href=/noticia-detalles/<%=noticiasTodo[i-1].titulo.replace(/ /g, "-")%>> <%= noticiasTodo[i-1].titulo %></a></h3>
+									<% } } %>
+									<%if(noticiasTodo.length<=5){ %>
+									 <%noticiasTodo.reverse().forEach(noticias=> { %>
+										<li><a href=/noticia-detalles/<%=noticias.titulo.replace(/ /g, "-")%>> <%= noticias.titulo %></a></h3>
+										<% }) }%>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

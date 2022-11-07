@@ -10,30 +10,28 @@ const passport = require('passport') //Módulo para Autenticar
 const morgan = require('morgan') //Módulo para metodos https
 const session = require('express-session') //Módulo session
 const cookieParser = require('cookie-parser') //Módulo para administrar Cookies
-const { body, validationResult } = require('express-validator')
-const formidable = require('formidable');
-const fs = require('fs')
+const { body, validationResult } = require('express-validator') //Módulo express-validator
+const formidable = require('formidable'); //Módulo para formularios
+const fs = require('fs') //Módulo para guardar imagenes
 //Configuraciones
 let port = process.env.PORT || 3000; //Conectarnos al puerto 3000
-console.log("Servidor funcionando en puerto " + port)
+console.log("Servidor funcionando en puerto " + port) //Log para saber que el servidor está funcionando
 
-app.listen(port)
-app.set('views', path.join(__dirname, 'views'))
-app.engine('html', require('ejs').renderFile)
+app.listen(port) //Escuchar al puerto
+app.set('views', path.join(__dirname, 'views')) //Carpeta donde están todas las vistas html/ejs
+app.engine('html', require('ejs').renderFile) //Renderizar html como ejs
 app.set("view engine", "ejs") //Permitir el uso de ejs
 
-// require('./config/passport.js')(passport)
-
 //Middlewares
-app.use(methodOverride('_method'));
-// app.use(morgan('dev'))
-app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(methodOverride('_method')); //Función de express
+app.use(cookieParser()) //Uso de cookie parser
+app.use(bodyParser.urlencoded({ extended: false })) 
 
-require('dotenv').config({
+require('dotenv').config({ //Dotenv para variables  de entorno
   path: path.resolve(__dirname, './sessionconfig.env')
 })
 
+//Sistema de login
 app.use(
   session({
     secret: process.env.secret,
@@ -46,13 +44,13 @@ app.use(flash());
 app.use(passport.initialize())
 app.use(passport.session())
 
-
+//Usuario interno tomando datos de mongodb
 passport.serializeUser((user, done) => done(null, { id: user.id, name: user.name, email: user.email }))
 passport.deserializeUser(async (user, done) => {
   const userDB = await usuarios.findById(user.id)
   return done(null, { id: userDB.id, name: userDB.name, email: userDB.email, admin: userDB.admin })
 })
-//req.user
+
 // Rutas
 app.use(require('./routes/'));
 //Archivos estáticos
@@ -60,7 +58,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Base de datos
 require("./config/database.js")
+
+//Consultas
 const consultas = require('./models/consultas.js');
+//Enviar consultas
 app.post("/Contacto", function (req, res) {
   let nuevaConsulta = new consultas({
     nombre: req.body.nombre,
@@ -72,48 +73,45 @@ app.post("/Contacto", function (req, res) {
   nuevaConsulta.save();
   res.redirect('/Contacto')
 })
-
-
+//Borrar consultas
 const deleteNote = async (req, res) => {
   await consultas.findByIdAndDelete(req.params.id);
   res.redirect("/admin")
 };
-
 app.post('/consultas/eliminar/:id', deleteNote)
 
-const productos = require('./models/productos.js');
 //Productos
+const productos = require('./models/productos.js');
+
+//Agregar productos
 app.post("/productos/agregar", function (req, res) {
   const form = new formidable.IncomingForm()
   form.parse(req, async (err, fields, files) => {
-
+  //Subir imagenes con el campo de files
     try {
       if (err) {
         throw new Error("Falló")
       }
       const file = files.imagen
     
-      if (file.originalFilename === "") {
-        throw new Error("Agrega una imagen")
+      if (file.originalFilename === "") { //Validación si no se sube archivos
+        throw new Error("Agrega una imagen para continuar")
       }
-      if (!(file.mimetype === "image/jpeg" || file.mimetype === "image/png")) {
+      if (!(file.mimetype === "image/jpeg" || file.mimetype === "image/png")) { //Formatos válidos
         throw new Error("Formato no válido, prueba con .png o .jpg")
       }
 
-      if (file.size > 50 * 1024 * 1024) {
+      if (file.size > 50 * 1024 * 1024) { //Tamaño máximo de 50mb
         throw new Error("Ingrese un archivo de menos de 50mb")
       }
-      let dirFile = path.join(__dirname, `./public/img/productos/${file.originalFilename}`)
+      let dirFile = path.join(__dirname, `./public/img/productos/${file.originalFilename}`) //crear la  ruta para guardar la imagen
 
       fs.copyFile(file.filepath, dirFile, function (err) {
         if (err) throw err;
-        // req.flash('Archivo subido');
-        // res.end();
-      });
-      req.flash("mensajes", [{ msg: "Archivo subido" }])
-      let nuevo = files.imagen.originalFilename
-
-      let nuevoProducto = new productos({
+      }); //Copiar archivo desde la ruta original al servidor
+      req.flash("mensajes", [{ msg: "Archivo subido" }]) 
+      let nuevo = files.imagen.originalFilename //Guardar nombre de la imagen para pasarlo a la base de datos
+      let nuevoProducto = new productos({ //Guardar producto en mongodb
         nombre: fields.producto,
         img: nuevo,
         precio: fields.precio,
@@ -122,24 +120,39 @@ app.post("/productos/agregar", function (req, res) {
       nuevoProducto.save();
     }
     catch (error) {
-      req.flash("mensajes", [{ msg: error.message }])
+      req.flash("mensajes", [{ msg: error.message }]) //Devolver cualquier error
     }
     finally {
-      res.redirect('/admin')
+      res.redirect('/admin') //Redireccionar al panel de admin
     }
   })
-
-  // res.redirect('/admin')
 })
-
-const deleteProductos = async (req, res) => {
+//Eliminar productos
+const deleteProductos = async (req, res) => { 
   await productos.findByIdAndDelete(req.params.id);
   res.redirect("/admin")
 };
 
 app.post('/productos/eliminar/:id', deleteProductos)
 
-//Correos
+//Editar productos
+app.post("/productos/editar/:id", async function (req, res) {
+
+  try {
+    await productos.findByIdAndUpdate(req.params.id, {
+      nombre: req.body.nombre.trim(),
+      precio: req.body.precio.trim(),
+      descripcion: req.body.descripcion.trim(),
+    })
+    res.redirect('/admin')
+  }
+  catch (error) {
+    return res.redirect('/')
+  }
+})
+
+
+//Suscripción por correo
 const correos = require('./models/correos.js');
 app.post("/", function (req, res) {
   let nuevoCorreo = new correos({
@@ -149,22 +162,15 @@ app.post("/", function (req, res) {
   res.redirect('/')
 })
 
+//Eliminar correos desde admin
 const deleteMail = async (req, res) => {
   await correos.findByIdAndDelete(req.params.id);
   res.redirect("/admin")
 };
-
 app.post('/correos/eliminar/:id', deleteMail)
 
 //Noticias
 const noticias = require('./models/noticias.js');
-const deleteNoticia = async (req, res) => {
-  await noticias.findByIdAndDelete(req.params.id);
-  res.redirect("/admin")
-};
-
-app.post('/noticias/eliminar/:id', deleteNoticia)
-
 //Agregar
 app.post("/admin/noticias", async function (req, res) {
   const form = new formidable.IncomingForm()
@@ -226,10 +232,15 @@ app.post("/admin/noticias", async function (req, res) {
 
 })
 
+//Eliminar
+const deleteNoticia = async (req, res) => {
+  await noticias.findByIdAndDelete(req.params.id);
+  res.redirect("/admin")
+};
+app.post('/noticias/eliminar/:id', deleteNoticia)
+
 //Editar
-
 app.post("/noticias/editar/:id", async function (req, res) {
-
   try {
     await noticias.findByIdAndUpdate(req.params.id, {
       titulo: req.body.titulo.trim(),
@@ -246,20 +257,18 @@ app.post("/noticias/editar/:id", async function (req, res) {
 
 
 //Usuarios
-//Login registro
-
 const usuarios = require('./models/usuarios.js');
 
-
+//Registro
 app.post("/login/register", [
   body("nameREG", "Ingrese un nombre válido").trim().notEmpty().escape(),
   body("emailREG", "Ingrese un email válido").trim().isEmail().normalizeEmail(),
-  body("passREG", "Contraseña no válida")
-    .trim()
-    .isLength({ min: 6 })
+  body("passREG", "Ingrese minimo 6 caracteres")
+    .trim() //Elimina espacios en blanco
+    .isLength({ min: 6 }) //Minimo 6 caracteres
     .escape()
     .custom((value, { req }) => {
-      if (value !== req.body.pass2REG) {
+      if (value !== req.body.pass2REG) { //Validación  de dos contraseñas
         throw new Error('No coincide las contraseñas')
       }
       else {
@@ -277,19 +286,19 @@ app.post("/login/register", [
 
     const { nameREG, emailREG, passREG } = req.body;
     try {
-      let userExistente = await usuarios.findOne({ email: req.body.emailREG })
+      let userExistente = await usuarios.findOne({ email: req.body.emailREG }) //Validación en mongodb si ya existe el usuario
       if (userExistente) {
         throw new Error('Usuario ya existe')
       }
       else {
-        let nuevoUsuario = new usuarios({
+        let nuevoUsuario = new usuarios({ //Guardar nuevo usuario
           name: nameREG, email: emailREG, pass: passREG, admin: false
         });
         nuevoUsuario.save();
         res.redirect('/')
       }
     }
-    catch (Error) {
+    catch (Error) {  //Errores
       req.flash("mensajes", [{ msg: Error.message }])
       return res.redirect('/login')
     }
@@ -298,7 +307,7 @@ app.post("/login/register", [
 //Usuarios Autenticación
 
 app.post("/login/auth", [
-  body("emailLOG", "Ingrese un email válido").trim().isEmail().normalizeEmail()
+  body("emailLOG", "Ingrese un email válido").trim().isEmail().normalizeEmail() //Validar email
 ], async function (req, res) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -310,14 +319,14 @@ app.post("/login/auth", [
 
   try {
     const user = await usuarios.findOne({ email: emailLOG })
-    if (!user) throw new Error('Usuario no existente')
+    if (!user) throw new Error('Usuario no existente') //Validar existencia de usuario
 
     if (!(await user.comparePass(passLOG))) {
-      throw new Error('Contraseña incorrecta')
+      throw new Error('Contraseña incorrecta') //Validar contraseña
     }
     else {
       req.login(user, function (err) {
-        if (err) throw new Error('Error al crear la sesión')
+        if (err) throw new Error('Error al crear la sesión') //Error del servidor
 
         return res.redirect('/')
       })
@@ -331,12 +340,12 @@ app.post("/login/auth", [
 })
 
 
-//Editar perfil
-
+//Perfil
+//Editar
 app.post("/perfil/edicion/:id", async function (req, res) {
 
   try {
-    await usuarios.findByIdAndUpdate(req.params.id, {
+    await usuarios.findByIdAndUpdate(req.params.id, {  //Editar campos del perfil
       nombreCompleto: req.body.nombreCompleto.trim(),
       telefono: req.body.telefono.trim(),
       direccion: req.body.direccion.trim(),
@@ -353,22 +362,8 @@ app.post("/perfil/edicion/:id", async function (req, res) {
   }
 })
 
-
-app.post("/productos/editar/:id", async function (req, res) {
-
-  try {
-    await productos.findByIdAndUpdate(req.params.id, {
-      nombre: req.body.nombre.trim(),
-      precio: req.body.precio.trim(),
-      descripcion: req.body.descripcion.trim(),
-    })
-    res.redirect('/admin')
-  }
-  catch (error) {
-    return res.redirect('/')
-  }
-})
-
+//Administradores
+//Agregar nuevos admins
 app.post("/admin/agregar", async function (req, res) {
 
   try {
@@ -387,6 +382,7 @@ app.post("/admin/agregar", async function (req, res) {
 
 })
 
+//Remover permisos de admin existentes
 app.post("/admin/eliminar/:id", async function (req, res) {
   try {
     await usuarios.findByIdAndUpdate(req.params.id, {
@@ -399,7 +395,9 @@ app.post("/admin/eliminar/:id", async function (req, res) {
   }
 })
 
+//Pedidos
 const pedido = require('./models/pedidos.js');
+//Enviar pedido
 app.post("/tienda/checkout", function (req, res) {
   let nuevoPedido = new pedido({
     nombre: req.body.nombre,
@@ -415,11 +413,16 @@ app.post("/tienda/checkout", function (req, res) {
   nuevoPedido.save();
   res.redirect('/tienda')
 })
-
+//Eliminar pedidos como admin
 const deletePedidos = async (req, res) => {
   await pedido.findByIdAndDelete(req.params.id);
-  res.redirect("/admin")
+  res.redirect('/admin')
 };
-
+const deletePedidosUser = async (req, res) => {
+  await pedido.findByIdAndDelete(req.params.id);
+  res.redirect('/perfil')
+};
 app.post('/pedido/eliminar/:id', deletePedidos)
+
+app.post('/pedidoUser/eliminar/:id', deletePedidosUser)
 

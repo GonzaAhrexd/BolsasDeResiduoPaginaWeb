@@ -5,8 +5,8 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description"
-		content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+	<meta name="description" content="S.O.S Empresa Simulada - Entregá esperanza a la naturaleza a través de nuestras bolsas">
+
 
 	<!-- title -->
 	<title>
@@ -280,6 +280,54 @@
 						<div>
 
 						</div>
+					</div>
+					<div>
+						<section>
+							
+							<div class="table-responsive">
+								<div class="corr">
+									<h3>Pedidos realizados</h3>
+									<% if(pedidosUser.length !== 0){ %>
+									<table class="table table-striped table" bgcolor="white" height="200px" width="100px" align="center"
+										border="red">
+										<tr style="color:white" align="center" id="Pintar">
+											<td>Precio </td>
+											<td>Productos </td>
+											<td>Fecha añadida</td>
+											<td> </td>
+										</tr>
+										
+										<%pedidosUser.forEach(pedido=> { %>
+				
+											<tr>
+												<td align="center">
+													$<%= pedido.precio%>
+												</td>
+												<td align="center">
+													<%= pedido.productos%>
+												</td>
+												<td align="center" style="text-transform: capitalize;">
+													<%= pedido.createdAt.toLocaleDateString('es-AR', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) %>
+												</td>
+													<td align="center">
+													<form action="/pedidoUser/eliminar/<%=pedido.id%>" method="POST">
+				
+														<button type="submit" class="delete2" onClick="borrar()" id="<%=pedido.id %>"
+															name="x">
+															❌ </button>
+													</form>
+												</td>
+											</tr>
+											<% })%>
+											<% } %>
+											<% if(pedidosUser.length === 0){ %>
+											<h4><a href="/tienda"> Compra algo </a> para ver tus pedidos aquí </h4>
+											<% } %>
+									</table>
+				
+								</div>
+							</div>
+						</section>
 					</div>
 				</div>
 			</div>

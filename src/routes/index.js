@@ -70,8 +70,8 @@ router.get('/404', (req, res) => {
     )
 })
 
-//Acerca de
-router.get('/Acercade', (req, res) => {
+//Nosotros
+router.get('/nosotros', (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
     if (req.isAuthenticated()) {
@@ -80,7 +80,7 @@ router.get('/Acercade', (req, res) => {
     }
     res.render('about.html',
         {
-            title: 'Acerca de',
+            title: 'Nosotros',
             usuario: usuarioLogeado,
             estaLog: estaLog
         }
@@ -156,40 +156,6 @@ router.get('/contact', (req, res) => {
     res.render('contact.html',
         {
             title: 'Contacto',
-            usuario: usuarioLogeado,
-            estaLog: estaLog
-        }
-    )
-})
-
-//Tienda
-// router.get('/pago', (req, res) => {
-//     let usuarioLogeado = " "
-//     let estaLog = false
-//     if (req.isAuthenticated()) {
-//         usuarioLogeado = req.user
-//         estaLog = true
-//     }
-//     res.render('checkout.html',
-//         {
-//             title: 'Pago',
-//             usuario: usuarioLogeado,
-//             estaLog: estaLog
-//         }
-//     )
-// })
-
-
-router.get('/carro', (req, res) => {
-    let usuarioLogeado = " "
-    let estaLog = false
-    if (req.isAuthenticated()) {
-        usuarioLogeado = req.user
-        estaLog = true
-    }
-    res.render('cart.html',
-        {
-            title: 'Carro',
             usuario: usuarioLogeado,
             estaLog: estaLog
         }
@@ -273,20 +239,18 @@ router.get('/logout', (req, res) => {
 const usuarios = require('../models/usuarios.js');
 router.get('/perfil', verificarSesion, async (req, res) => {
     let usuarioLogeado = ""
+    let pedidosUser = []
     let estaLog = false
     if (req.isAuthenticated()) {
         usuarioLogeado = await usuarios.findOne({ email: req.user.email })
         estaLog = true
+        pedidosUser = await pedidos.find({email: req.user.email})
     }
-
-
-
-
-
     res.render('perfil.html',
         {
             title: 'Perfil de Usuario',
             usuario: usuarioLogeado,
+            pedidosUser: pedidosUser,
             estaLog: estaLog,
             mensajes: req.flash("mensajes")
         })

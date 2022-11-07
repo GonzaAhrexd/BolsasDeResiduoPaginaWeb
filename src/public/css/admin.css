@@ -6,7 +6,9 @@
 #prueba {
     word-wrap: break-word;
 }
-
+#pedidos{
+    display:none;
+}
 .consultaBase {
     display: flex;
 }

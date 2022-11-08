@@ -16,7 +16,6 @@ function productos() {
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'none'
     pedidosDisplay.style.display = 'none'
-    document.documentElement.scrollTop = 855
 }
 
 function pedidos() {
@@ -26,7 +25,7 @@ function pedidos() {
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'none'
     pedidosDisplay.style.display = 'block'
-    document.documentElement.scrollTop = 855
+    // document.documentElement.scrollTop = 855
 }
 
 function consultas() {
@@ -35,7 +34,7 @@ function consultas() {
     correosDisplay.style.display = 'none'
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'none'
-    document.documentElement.scrollTop = 855
+    // document.documentElement.scrollTop = 855
 }
 function correos() {
     consultasDisplay.style.display = 'none';
@@ -44,7 +43,7 @@ function correos() {
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'none'
     pedidosDisplay.style.display = 'none'
-    document.documentElement.scrollTop = 855
+    // document.documentElement.scrollTop = 855
 }
 
 function noticias2() {
@@ -54,7 +53,7 @@ function noticias2() {
     noticiasDisplay.style.display = 'block'
     administradorDisplay.style.display = 'none'
     pedidosDisplay.style.display = 'none'
-    document.documentElement.scrollTop = 855
+    // document.documentElement.scrollTop = 855
 }
 
 function admin() {
@@ -64,7 +63,7 @@ function admin() {
     noticiasDisplay.style.display = 'none'
     administradorDisplay.style.display = 'block'
     pedidosDisplay.style.display = 'none'
-    document.documentElement.scrollTop = 855
+    // document.documentElement.scrollTop = 855
 }
 
 const editarBoton = document.querySelectorAll('#edit')

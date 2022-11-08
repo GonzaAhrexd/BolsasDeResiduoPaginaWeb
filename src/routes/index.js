@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const { authenticate } = require('passport');
 const verificarAdmin = require('../middlewares/verificarAdmin.js');
-//Index
 const verificarSesion = require('../middlewares/verificarSesion.js')
 
+//Index
 router.get('/', (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
@@ -35,7 +35,6 @@ router.get('/login', (req, res) => {
 })
 
 //Contacto
-
 router.get('/Contacto', async (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
@@ -50,7 +49,6 @@ router.get('/Contacto', async (req, res) => {
             estaLog: estaLog
         }
     )
-
 })
 
 //404
@@ -109,6 +107,7 @@ router.get('/Noticias', (req, res) => {
     })
 })
 
+//Noticias-detalles
 
 router.get(`/noticia-detalles/:titulo`, async (req, res) => {
     let usuarioLogeado = " "
@@ -145,22 +144,8 @@ router.get(`/noticia-detalles/:titulo`, async (req, res) => {
     }
 })
 
+//Panel de Admin
 
-router.get('/contact', (req, res) => {
-    let usuarioLogeado = " "
-    let estaLog = false
-    if (req.isAuthenticated()) {
-        usuarioLogeado = req.user
-        estaLog = true
-    }
-    res.render('contact.html',
-        {
-            title: 'Contacto',
-            usuario: usuarioLogeado,
-            estaLog: estaLog
-        }
-    )
-})
 
 const consultas = require('../models/consultas.js');
 const correos = require('../models/correos.js');
@@ -173,10 +158,6 @@ router.get('/admin', verificarAdmin, async (req, res) => {
         usuarioLogeado = await usuarios.findOne({ email: req.user.email })
         estaLog = true
     }
-
-
-
-
     usuarios.find({}, function (err, usersAdmin) {
         consultas.find({}, function (err, consultas) {
             correos.find({}, function (err, correos) {
@@ -185,7 +166,7 @@ router.get('/admin', verificarAdmin, async (req, res) => {
                         pedidos.find({}, function (err, pedido) {
                             res.render('adminView.ejs',
                                 {
-                                    title: 'Admin',
+                                    title: 'Panel de Administrador',
                                     consultasList: consultas,
                                     correosList: correos,
                                     productosList: productos,

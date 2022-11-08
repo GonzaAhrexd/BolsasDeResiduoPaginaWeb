@@ -22,9 +22,7 @@ items.forEach(item => {
 productos.addEventListener('click', e => {
     btnAccion(e)
 })
-botonCarro.addEventListener('click', () => {
-    document.documentElement.scrollTop = 300
-})
+
 
 const addCarrito = e => {
     console.log(e.target.classList.contains('boxed-btn'))
@@ -119,6 +117,7 @@ const pintarFooter = () => {
     })
     const next = document.getElementById('siguiente')
     next.addEventListener('click',() =>{
+        // document.documentElement.scrollTop = 800
         let listaProducto = []
         checkout.style.display = "block"
         Object.values(carrito).forEach(producto => {

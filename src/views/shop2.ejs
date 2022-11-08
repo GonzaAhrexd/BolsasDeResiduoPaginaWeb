@@ -77,7 +77,9 @@
 		<!-- end breadcrumb section -->
 
 		<!-- products -->
-		<a id="botonCarro" class="btn-flotante"><i class="fas fa-shopping-cart blanco"> <span id="cantCarro"></span></i></a>
+		<div id="Carrito">
+		</div>
+		<a id="botonCarro" class="btn-flotante" href="#Carrito"><i class="fas fa-shopping-cart blanco"> <span id="cantCarro"></span></i></a>
 		<div class="cart-section mt-150 mb-150">
 			<div class="container">
 				<div class="row">
@@ -143,21 +145,22 @@
 							</table>
 							<div class="cart-buttons">
 								<a id="delete" class="boxed-btn">Eliminar</a>
-								<a id="siguiente" class="boxed-btn black">Continuar</a>
+								<a id="siguiente" class="boxed-btn black" href="#Pedido">Continuar</a>
 							</div>
 						</div>
 				</div>
 				
 			</div>
 		</div>
-
+<div id="Pedido">
+</div>
 		<div class="contact-from-section mt-150 mb-150">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 mb-5 mb-lg-0">
 		<div id="form_status"></div>
 		<div class="contact-form" id="checkout" style="display:none;">
-			<form method="post" id="fruitkha-contact" action="/tienda/checkout">
+			<form method="post" onsubmit="ala()" id="fruitkha-contact" action="/tienda/checkout">
 				<p>
 					<input type="text" style="width: 99%;" placeholder="Nombre" name="nombre" id="nombre" value="<%= usuario.nombreCompleto  %>"required>
 				</p>
@@ -252,6 +255,18 @@
 			<script src="/js/main.js"></script>
 
 			<script src="/js/carrito.js"></script>
-</body>
+			<script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+			</script>
+			<script type="text/javascript">
+				function ala() {
+					Swal.fire({
+						title: "Enviado",
+						text: "Su pedido ha sido enviado con éxito",
+						icon: "success"
+					});
+				}
+			</script>
+
+		</body>
 
 </html>

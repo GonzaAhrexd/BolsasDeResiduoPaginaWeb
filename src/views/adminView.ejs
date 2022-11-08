@@ -64,12 +64,12 @@
 							<div class="hero-text-tablecell">
 								<h1> Panel de Admin </h1>
 								<div class="hero-btns">
-									<a onClick="productos()" class="boxed-btn">Productos</a>
-									<a onClick="consultas()" class="boxed-btn">Consultas</a>
-									<a onClick="correos()" class="boxed-btn">Correos</a>
-									<a onClick="noticias2()" class="boxed-btn">Noticias</a>
-									<a onClick="pedidos()" class="boxed-btn">Pedidos</a>
-									<a onClick="admin()" class="boxed-btn">Administradores</a>
+									<a onClick="productos()" href="#VistaProductos" class="boxed-btn">Productos</a>
+									<a onClick="consultas()" href="#VistaConsultas" class="boxed-btn">Consultas</a>
+									<a onClick="correos()" href="#VistaCorreos" class="boxed-btn">Correos</a>
+									<a onClick="noticias2()" href="#VistaNoticias" class="boxed-btn">Noticias</a>
+									<a onClick="pedidos()" href="#VistaPedidos" class="boxed-btn">Pedidos</a>
+									<a onClick="admin()" href="#VistaAdministradores" class="boxed-btn">Administradores</a>
 									
 								</div>
 							</div>
@@ -84,7 +84,14 @@
 			 <%}) %>
 		  </span>
 		<!-- Agregar Productos -->
-
+		<div> 
+		<div id="VistaProductos"></div>
+		<div id="VistaConsultas"></div>
+		<div id="VistaCorreos"></div>
+		<div id="VistaNoticias"></div>
+		<div id="VistaPedidos"></div>
+		<div id="VistaAdministradores"></div>
+		</div>
 		<section class="productos" id="productos">
 			<div class="contact-from-section mt-150 mb-150">
 				<div class="container">
@@ -175,10 +182,25 @@
 		</section>
 
 		<!-- Consultas lista -->
-
+		
 		<section class="consultaBase" id="consultas">
 			<div class="table-responsive">
 				<div class="Consultas">
+					<div class="contact-from-section mt-150 mb-150">
+						<div class="container">
+							<div class="row" style="justify-content: center;">
+								<div class="col-lg-8 mb-5 mb-lg-0">
+									<div class="Cuadro">
+										<div id="form_status"></div>
+										<div class="textoProductos">
+												<h1>Consultas realizadas</h1>
+												
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<table class="table table-striped table" bgcolor="white" height="200px" width="150px" align="center"
 						border="red">
 						<tr style="color:white" align="center" id="Pintar">
@@ -227,6 +249,21 @@
 		<section class="correosDisplay" id="correosDisplay">
 			<div class="table-responsive">
 				<div class="corr">
+					<div class="contact-from-section mt-150 mb-150">
+						<div class="container">
+							<div class="row" style="justify-content: center;">
+								<div class="col-lg-8 mb-5 mb-lg-0">
+									<div class="Cuadro">
+										<div id="form_status"></div>
+										<div class="textoProductos">
+												<h1>Suscripciones</h1>
+												
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<table class="table table-striped table" bgcolor="white" height="200px" width="100px" align="center"
 						border="red">
 						<tr style="color:white" align="center" id="Pintar">
@@ -363,6 +400,22 @@
 		<section id="pedidos">
 			<div class="table-responsive">
 				<div class="corr">
+					<div class="corr">
+						<div class="contact-from-section mt-150 mb-150">
+							<div class="container">
+								<div class="row" style="justify-content: center;">
+									<div class="col-lg-8 mb-5 mb-lg-0">
+										<div class="Cuadro">
+											<div id="form_status"></div>
+											<div class="textoProductos">
+													<h1>Pedidos</h1>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					<table class="table table-striped table" bgcolor="white" height="200px" width="100px" align="center"
 						border="red">
 						<tr style="color:white" align="center" id="Pintar">

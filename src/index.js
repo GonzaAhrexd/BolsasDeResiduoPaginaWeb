@@ -426,3 +426,18 @@ app.post('/pedido/eliminar/:id', deletePedidos)
 
 app.post('/pedidoUser/eliminar/:id', deletePedidosUser)
 
+app.use(function(req, res){
+  let usuarioLogeado = " "
+let estaLog = false
+if (req.isAuthenticated()) {
+    usuarioLogeado = req.user
+    estaLog = true
+}
+
+  res.status(404).render("404.html", { 
+    title: "No encontrado" ,
+    usuario: usuarioLogeado,
+    estaLog: estaLog
+}
+)
+})

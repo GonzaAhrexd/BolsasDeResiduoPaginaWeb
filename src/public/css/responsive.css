@@ -40,8 +40,16 @@
 }
 /* Tablet Layout: 768px. */
 @media only screen and (min-width: 768px) and (max-width: 991px) { 
+
+	.resAdmin2{
+		display:block;
+	}
+	.resAdmin1{
+		display:none;
+	}
 	.hero-text h1 {
 	    font-size: 40px;
+		margin: 0px;
 	}
 	.footer-box {
 	    margin-bottom: 40px;
@@ -198,7 +206,10 @@
 	    z-index: 999;
 	    color: #fff;
 	}
-
+	.hero-btns {
+		margin-top: 0px;
+		margin-right: 0px;
+	}
 }
 
 /* Mobile Layout: 320px. */
@@ -381,6 +392,7 @@
 	.hero-btns a.boxed-btn {
 	    display: block;
 	    margin: 0 auto;
+		margin-bottom: 0.5rem;
 	}
 
 	.hero-btns {

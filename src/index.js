@@ -92,6 +92,11 @@ app.post("/productos/agregar", function (req, res) {
       if (err) {
         throw new Error("Falló")
       }
+      let productoExistente = await productos.findOne({ nombre: fields.producto })
+      if (productoExistente) {
+        throw new Error('Producto ya existente')
+      }
+
       const file = files.imagen
     
       if (file.originalFilename === "") { //Validación si no se sube archivos

@@ -18,10 +18,6 @@ const ProductoSchema = new mongoose.Schema({
         type:  String,
         required: true
     },
-    enCarrito: {
-        type:  Boolean,
-        default: false
-    },
     precio: {
         type:  Number,
         required: true

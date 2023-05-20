@@ -106,14 +106,14 @@ npm install
 4. Configura las variables de entorno para las sesiones
 - Ve a la carpeta src en donde se encuentre el index.js y agrega un archivo llamado "sessionconfig.env" y asigna las variables de entorno para la sesión, aquí puedes poner cualquier valor
 
-![Ruta en donde poner el archivo](https://cdn.discordapp.com/attachments/740761148642689055/1109269100754124842/image.png)
+![Ruta en donde poner el archivo](https://cdn.discordapp.com/attachments/740761148642689055/1109283176737673226/image.png)
 
 ```sessionconfig.env
 secret=nombre
 name=secret-name-nombre
 ```
 5. Configura las variables de entorno para la base de datos en MongoDB
-
+[!Ruta en donde poner el  archivo](https://cdn.discordapp.com/attachments/740761148642689055/1109282521579008100/image.png)
 * Si estás usando mongoDB Cloud, agrega un archivo "dbconfig.env" dentro de  ./src/config
 
 ```dbconfig.env

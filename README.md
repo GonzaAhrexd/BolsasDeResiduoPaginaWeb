@@ -42,12 +42,13 @@ Panel para acceder a distintos datos de la base de datos, actúa como un crud, s
 - Administradores: Se puede otorgar permisos de administrador
 
 ## Algunas capturas
+<div>
 
-<div align="center">
 ![Página de Inicio](https://cdn.discordapp.com/attachments/740761148642689055/1109274225472180254/image.png)
 ![Tienda](https://cdn.discordapp.com/attachments/740761148642689055/1109275062906920970/image.png)
 ![Noticias](https://cdn.discordapp.com/attachments/740761148642689055/1109275721379106926/image.png)
 ![Panel de Admin](https://cdn.discordapp.com/attachments/740761148642689055/1109276573401612350/image.png)
+
 </div>
 
 ## Tecnologías utilizadas

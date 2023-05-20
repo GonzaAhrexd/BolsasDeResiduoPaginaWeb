@@ -110,16 +110,20 @@ npm install
 ![Ruta en donde poner el archivo](https://cdn.discordapp.com/attachments/740761148642689055/1109283176737673226/image.png)
 
 </div>
+
 ```sessionconfig.env
 secret=nombre
 name=secret-name-nombre
 ```
+
 5. Configura las variables de entorno para la base de datos en MongoDB
+
 <div align="center">
 
-[!Ruta en donde poner el  archivo](https://cdn.discordapp.com/attachments/740761148642689055/1109282521579008100/image.png)
+![Ruta en donde poner el  archivo](https://cdn.discordapp.com/attachments/740761148642689055/1109282521579008100/image.png)
 
 </div>
+
 * Si estás usando mongoDB Cloud, agrega un archivo "dbconfig.env" dentro de  ./src/config
 
 ```dbconfig.env

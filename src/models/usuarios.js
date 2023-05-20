@@ -1,4 +1,3 @@
-// const {Schema, model} = require('mongodb');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const { serializeUser } = require('passport');

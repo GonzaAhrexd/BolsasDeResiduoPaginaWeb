@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-
-//const { default: mongoose } = require('mongoose');
-
 const CarritoSchema= new mongoose.Schema({
     nombre: {
         type:  String,
@@ -43,7 +40,6 @@ const CarritoSchema= new mongoose.Schema({
     {
         timestamps: true
 })
-
 
 const carrito = mongoose.model('pedidos', CarritoSchema)
 module.exports = carrito;

@@ -189,7 +189,7 @@ router.get('/admin', verificarAdmin, async (req, res) => {
 
 const productos = require('../models/productos.js');
 const { default: mongoose } = require('mongoose');
-
+//Tienda
 router.get('/tienda', async (req, res) => {
     let usuarioLogeado = " "
     let estaLog = false
@@ -217,6 +217,7 @@ router.get('/logout', (req, res) => {
     });
 })
 
+//Perfil
 const usuarios = require('../models/usuarios.js');
 router.get('/perfil', verificarSesion, async (req, res) => {
     let usuarioLogeado = ""

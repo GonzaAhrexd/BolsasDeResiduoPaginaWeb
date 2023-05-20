@@ -1,32 +1,26 @@
 const mongoose = require('mongoose');
-
-//const { default: mongoose } = require('mongoose');
-
 const ConsultasSchema = new mongoose.Schema({
     nombre: {
-        type:  String,
+        type: String,
         required: true
     },
     telefono: {
-        type:  String,
+        type: String,
         required: false
     },
     email: {
-        type:  String,
+        type: String,
         required: true
     },
     asunto: {
-        type:  String,
+        type: String,
         required: true
     },
     mensaje: {
-        type:  String,
+        type: String,
         required: true
     },
 
 })
-
 const consulta = mongoose.model('consultas', ConsultasSchema)
-
-
 module.exports = consulta;

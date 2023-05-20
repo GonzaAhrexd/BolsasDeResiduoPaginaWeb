@@ -1,9 +1,4 @@
-// https://www.youtube.com/watch?v=R4eLKuzg2WU
-
 const mongoose = require('mongoose');
-
-//const { default: mongoose } = require('mongoose');
-
 const ProductoSchema = new mongoose.Schema({
     nombre: {
         type:  String,

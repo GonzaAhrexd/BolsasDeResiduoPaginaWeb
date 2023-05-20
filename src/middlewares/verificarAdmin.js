@@ -5,7 +5,7 @@ const flash = require('connect-flash') //Módulo flash
 module.exports = async (req,res,next) => {
     if(req.isAuthenticated()){
         
-        if(req.user.admin)
+        if(req.user.admin) //Verificación si el usuario es administrador
         return next()  
 }
 

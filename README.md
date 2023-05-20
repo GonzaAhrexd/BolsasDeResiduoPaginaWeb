@@ -149,6 +149,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 npm start
 ```
 6. Accede a la página web en tu navegador.
-
+```url
 http://localhost:3000
-
+```
